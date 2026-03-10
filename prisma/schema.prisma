@@ -1,0 +1,93 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─── Enums ───────────────────────────────────────────────────────────────────
+
+enum ServiceType {
+  ONE_ON_ONE
+  GROUP
+}
+
+enum SessionStatus {
+  OPEN
+  FULL
+  CANCELLED
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  DECLINED
+  CANCELLED
+}
+
+// ─── Models ──────────────────────────────────────────────────────────────────
+
+model Instructor {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  bio          String?
+  profileImage String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Service {
+  id           String      @id @default(cuid())
+  title        String
+  description  String
+  type         ServiceType
+  durationMins Int
+  priceNote    String?     // e.g. "From KES 2,000 — pay via M-Pesa after confirmation"
+  isActive     Boolean     @default(true)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  sessions     Session[]
+}
+
+model Session {
+  id           String        @id @default(cuid())
+  serviceId    String
+  service      Service       @relation(fields: [serviceId], references: [id])
+  title        String?       // Optional override title (e.g. "Morning HIIT Blast")
+  startTime    DateTime
+  endTime      DateTime
+  capacity     Int           @default(1)   // 1 for 1-on-1, N for group
+  bookedCount  Int           @default(0)   // Incremented on confirmed booking
+  location     String?       // e.g. "Westlands Gym, Studio B" or "Online"
+  notes        String?
+  status       SessionStatus @default(OPEN)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  bookings     Booking[]
+
+  @@index([startTime])
+  @@index([status])
+}
+
+model Booking {
+  id            String        @id @default(cuid())
+  sessionId     String
+  session       Session       @relation(fields: [sessionId], references: [id])
+  clientName    String
+  clientEmail   String
+  clientPhone   String?
+  notes         String?
+  status        BookingStatus @default(PENDING)
+  statusNote    String?       // Instructor note on decline/cancel
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([clientEmail])
+  @@index([status])
+  @@index([sessionId])
+}
