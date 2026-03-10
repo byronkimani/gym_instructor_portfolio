@@ -25,9 +25,9 @@ async function getBookingDetails(id: string) {
 export default async function BookingConfirmPage({
   searchParams,
 }: {
-  searchParams: { bookingId?: string };
+  searchParams: Promise<{ bookingId?: string }>;
 }) {
-  const bookingId = searchParams.bookingId;
+  const { bookingId } = await searchParams;
 
   if (!bookingId) {
     return (
@@ -43,7 +43,7 @@ export default async function BookingConfirmPage({
     return (
       <div className="bg-surface min-h-screen flex flex-col items-center justify-center p-4">
         <h1 className="text-2xl font-bold text-primary mb-4">Booking Not Found</h1>
-        <p className="text-text-muted mb-6">We couldn't locate that booking reference. It may have been removed.</p>
+        <p className="text-text-muted mb-6">We couldn&apos;t locate that booking reference. It may have been removed.</p>
         <Link href="/schedule" className="text-accent font-semibold hover:underline">Return to Schedule</Link>
       </div>
     )

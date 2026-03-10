@@ -24,23 +24,39 @@ const localizer = dateFnsLocalizer({
     locales,
 });
 
-export default function CalendarComponent({ initialSessions }: { initialSessions: any[] }) {
+interface CalendarSession {
+    id: string;
+    title: string | null;
+    startTime: Date | string;
+    location: string | null;
+    status: string;
+    capacity: number;
+    bookedCount: number;
+    service: { type: string; durationMins: number };
+}
+
+interface CalendarEvent extends CalendarSession {
+    start: Date;
+    end: Date;
+}
+
+export default function CalendarComponent({ initialSessions }: { initialSessions: CalendarSession[] }) {
     const router = useRouter();
     const [view, setView] = useState<View>(Views.MONTH);
     const [date, setDate] = useState(new Date());
-    const [selectedSession, setSelectedSession] = useState<any | null>(null);
+    const [selectedSession, setSelectedSession] = useState<CalendarEvent | null>(null);
 
     // Map sessions to RBI events
     const events = useMemo(() => {
         return initialSessions.map(session => ({
             ...session,
             start: new Date(session.startTime),
-            end: new Date(new Date(session.startTime).getTime() + (session.service?.duration || 60) * 60000),
+            end: new Date(new Date(session.startTime).getTime() + (session.service?.durationMins || 60) * 60000),
             title: `${session.title} (${session.bookedCount}/${session.capacity})`,
         }));
     }, [initialSessions]);
 
-    const eventPropGetter = useCallback((event: any) => {
+    const eventPropGetter = useCallback((event: CalendarEvent) => {
         let backgroundColor = '#2563eb'; // Default Blue
         let border = 'none';
 
@@ -100,7 +116,7 @@ export default function CalendarComponent({ initialSessions }: { initialSessions
                     eventPropGetter={eventPropGetter}
                     onSelectEvent={(event) => setSelectedSession(event)}
                     popup
-                    DayLayoutAlgorithm="no-overlap"
+                    dayLayoutAlgorithm="no-overlap"
                     className="font-sans text-sm text-slate-700"
                 />
             </div>
@@ -133,7 +149,7 @@ export default function CalendarComponent({ initialSessions }: { initialSessions
                                 </div>
                                 <div className="flex items-center gap-3 text-sm text-text-muted">
                                     <Activity className="w-4 h-4 text-accent" />
-                                    <span>{selectedSession.service?.duration} Minutes</span>
+                                    <span>{selectedSession.service?.durationMins} Minutes</span>
                                 </div>
                                 <div className="flex items-center gap-3 text-sm text-text-muted">
                                     <MapPin className="w-4 h-4 text-accent" />
@@ -158,7 +174,7 @@ export default function CalendarComponent({ initialSessions }: { initialSessions
 
                                 {/* Raw SQL/API needed to get bookings per session, but for the slideover we might just show a CTA or fetch them client-side if missing. Assuming we don't fetch deep nested bookings up front for performance, we show a CTA */}
                                 <div className="bg-slate-100 rounded-xl p-4 text-center text-sm text-slate-500">
-                                    <p>Click "Manage All" to review, confirm, or cancel bookings for this specific session.</p>
+                                    <p>Click &ldquo;Manage All&rdquo; to review, confirm, or cancel bookings for this specific session.</p>
                                 </div>
                             </div>
                         </div>

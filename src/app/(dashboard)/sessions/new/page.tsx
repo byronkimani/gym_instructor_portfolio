@@ -11,9 +11,16 @@ import Link from 'next/link';
 
 type SessionFormData = z.infer<typeof CreateSessionSchema>;
 
+interface Service {
+  id: string;
+  name: string;
+  type: 'ONE_ON_ONE' | 'GROUP';
+  durationMins: number;
+}
+
 export default function NewSessionPage() {
   const router = useRouter();
-  const [services, setServices] = useState<any[]>([]);
+  const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState(false);
   const [fetchLoading, setFetchLoading] = useState(true);
   const [apiError, setApiError] = useState('');
@@ -33,6 +40,7 @@ export default function NewSessionPage() {
 
   const selectedServiceId = watch('serviceId');
   const activeService = services.find(s => s.id === selectedServiceId);
+  const startTime = watch('startTime');
 
   // Auto-lock capacity for 1-on-1
   useEffect(() => {
@@ -41,16 +49,28 @@ export default function NewSessionPage() {
     }
   }, [activeService, setValue]);
 
+  // Auto-calculate endTime based on startTime and activeService.durationMins
+  useEffect(() => {
+    if (startTime && activeService) {
+      const start = new Date(startTime);
+      if (!isNaN(start.getTime())) {
+        const end = new Date(start.getTime() + activeService.durationMins * 60000);
+        // Format to ISO string for the backend as datetime-local returns local time string
+        setValue('endTime', end.toISOString(), { shouldValidate: true });
+      }
+    }
+  }, [startTime, activeService, setValue]);
+
   useEffect(() => {
     // We need services to populate the dropdown. Since we only have the sessions endpoint,
     // wait, we designed the DB to have Services.
     const getServices = async () => {
       try {
-        const res = await fetch('/api/services'); // We might need to build this or inline it
+        const res = await fetch('/api/services', { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to fetch services');
         const json = await res.json();
-        setServices(json.data?.services || []);
-      } catch (err) {
+        setServices(json.data?.services || json.services || []);
+      } catch {
         // Fallback or handle later
         setApiError("Failed to load services. Please ensure the backend is running.");
       } finally {
@@ -77,8 +97,8 @@ export default function NewSessionPage() {
 
       router.push('/sessions');
       router.refresh(); // Force a refresh to show the new session
-    } catch (err: any) {
-      setApiError(err.message);
+    } catch (err: unknown) {
+      setApiError(err instanceof Error ? err.message : 'Failed to create session');
     } finally {
       setLoading(false);
     }

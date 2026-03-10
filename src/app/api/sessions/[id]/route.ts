@@ -5,10 +5,10 @@ import { SessionStatus, BookingStatus } from '@prisma/client';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const sessionId = params.id;
+    const { id: sessionId } = await params;
     const session = await prisma.session.findUnique({
       where: { id: sessionId },
       include: { service: true }
@@ -32,17 +32,16 @@ export async function GET(
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await requireAuth();
     
-    const sessionId = params.id;
+    const { id: sessionId } = await params;
     const body = await request.json();
 
-    // Partial Update (omitting extensive Zod schema here since only specific fields are mutable safely)
     const allowedFields = ['title', 'startTime', 'endTime', 'location', 'notes', 'capacity'];
-    const updateData: any = {};
+    const updateData: Record<string, unknown> = {};
     for (const key of Object.keys(body)) {
       if (allowedFields.includes(key)) {
         if (key === 'startTime' || key === 'endTime') {
@@ -58,7 +57,6 @@ export async function PATCH(
       data: updateData,
     });
 
-    // Automatically toggle OPEN/FULL if capacity was changed
     if (body.capacity !== undefined) {
        const finalStatus = updatedSession.bookedCount >= updatedSession.capacity 
             ? SessionStatus.FULL 
@@ -73,33 +71,30 @@ export async function PATCH(
     }
 
     return successResponse({ session: updatedSession });
-  } catch (error: any) {
+  } catch (error) {
     if (error instanceof Response) return error;
     console.error(`PATCH /api/sessions/[id] error:`, error);
     return errorResponse('Internal server error', 500);
   }
 }
 
-
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await requireAuth();
     
-    const sessionId = params.id;
+    const { id: sessionId } = await params;
 
     const session = await prisma.session.findUnique({ where: { id: sessionId }});
     if (!session) return errorResponse('Session not found', 404);
 
     await prisma.$transaction([
-      // Cancel the session
       prisma.session.update({
         where: { id: sessionId },
         data: { status: SessionStatus.CANCELLED }
       }),
-      // Decline any unconfirmed bookings automatically across the board to prevent orphaned state
       prisma.booking.updateMany({
         where: { 
           sessionId, 
@@ -112,11 +107,8 @@ export async function DELETE(
       })
     ]);
 
-    // Side effect: Instructor should use individual booking status callbacks if they wish to email clients a cancellation,
-    // or we'd ideally fan out emails here.
-
     return successResponse({ message: 'Session cancelled successfully' });
-  } catch (error: any) {
+  } catch (error) {
     if (error instanceof Response) return error;
     console.error(`DELETE /api/sessions/[id] error:`, error);
     return errorResponse('Internal server error', 500);

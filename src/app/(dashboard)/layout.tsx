@@ -11,7 +11,7 @@ export default async function DashboardLayout({
   try {
     // Top-level layout protection. If this throws, Next.js handles it or we manually redirect.
     await requireAuth();
-  } catch (error) {
+  } catch {
     redirect('/api/auth/signin'); // Or custom login page if implemented
   }
 

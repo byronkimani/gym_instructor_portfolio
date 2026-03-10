@@ -1,15 +1,21 @@
 import Link from 'next/link';
 import { ArrowRight, Clock, MapPin, Play, Dumbbell } from 'lucide-react';
 
+import { prisma } from '@/lib/prisma';
+
 export const dynamic = 'force-dynamic';
 
 async function getUpcomingSessions() {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/sessions?status=OPEN&limit=3`, {
-        cache: 'no-store'
-    });
-    if (!res.ok) return [];
-    const data = await res.json();
-    return data.sessions || [];
+    try {
+        return await prisma.session.findMany({
+            where: { status: 'OPEN', startTime: { gte: new Date() } },
+            orderBy: { startTime: 'asc' },
+            take: 3,
+            include: { service: true },
+        });
+    } catch {
+        return [];
+    }
 }
 
 export default async function HomePage() {
@@ -74,7 +80,7 @@ export default async function HomePage() {
                 <div className="max-w-7xl mx-auto">
                     <div className="text-center mb-16">
                         <h2 className="text-accent font-bold tracking-wider uppercase text-sm mb-2">Training Programs</h2>
-                        <h3 className="text-4xl font-extrabold text-primary tracking-tight">How We'll Work Together</h3>
+                        <h3 className="text-4xl font-extrabold text-primary tracking-tight">How We&apos;ll Work Together</h3>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -122,14 +128,16 @@ export default async function HomePage() {
 
                     {sessions.length > 0 ? (
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            {sessions.map((session: any) => (
+                            {sessions.map((session) => {
+                                const spotsLeft = Math.max(0, session.capacity - session.bookedCount);
+                                return (
                                 <div key={session.id} className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col h-full">
                                     <div className="flex justify-between items-start mb-4">
                                         <span className="bg-accent/10 text-accent text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
                                             {session.service?.type?.replace('_', ' ')}
                                         </span>
                                         <span className="text-sm font-semibold text-text-muted bg-slate-100 px-2 py-1 rounded">
-                                            {session.service?.duration} Min
+                                            {session.service?.durationMins} Min
                                         </span>
                                     </div>
 
@@ -153,10 +161,11 @@ export default async function HomePage() {
                                                 style={{ width: `${Math.min(100, (session.bookedCount / session.capacity) * 100)}% ` }}
                                             />
                                         </div>
-                                        <span className="text-xs font-bold text-slate-500">{session.spotsLeft} spots left</span>
+                                        <span className="text-xs font-bold text-slate-500">{spotsLeft} spots left</span>
                                     </div>
                                 </div>
-                            ))}
+                                );
+                            })}
                         </div>
                     ) : (
                         <div className="text-center bg-white p-12 rounded-3xl border border-dashed border-slate-300">
@@ -169,7 +178,7 @@ export default async function HomePage() {
             {/* 5. Contact CTA */}
             <section className="bg-accent py-20 px-4 text-center">
                 <h2 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight mb-6">Ready to make a change?</h2>
-                <p className="text-white/90 text-xl mb-10 max-w-2xl mx-auto">Have specific goals or injuries? Reach out and let's craft a plan together before you book.</p>
+                <p className="text-white/90 text-xl mb-10 max-w-2xl mx-auto">Have specific goals or injuries? Reach out and let&apos;s craft a plan together before you book.</p>
                 <Link href="/contact" className="bg-white text-accent hover:bg-slate-100 font-bold py-4 px-10 rounded-full transition-all text-lg shadow-lg inline-flex items-center gap-2">
                     Get in Touch <ArrowRight className="h-5 w-5" />
                 </Link>

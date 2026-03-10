@@ -16,7 +16,16 @@ function BookingFormInner() {
   const searchParams = useSearchParams();
   const preselectedSessionId = searchParams.get('sessionId');
 
-  const [sessions, setSessions] = useState<any[]>([]);
+interface SessionOption {
+    id: string;
+    title: string | null;
+    startTime: string;
+    location: string | null;
+    spotsLeft: number;
+    service: { title: string; type: string };
+  }
+
+  const [sessions, setSessions] = useState<SessionOption[]>([]);
   const [loadingSessions, setLoadingSessions] = useState(true);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'loading' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
@@ -46,7 +55,7 @@ function BookingFormInner() {
           setSessions(json.sessions || []);
 
           // Auto-select if a matching ID was passed
-          if (preselectedSessionId && json.sessions.some((s: any) => s.id === preselectedSessionId)) {
+          if (preselectedSessionId && json.sessions.some((s: SessionOption) => s.id === preselectedSessionId)) {
             setValue('sessionId', preselectedSessionId);
           }
         }
@@ -80,7 +89,7 @@ function BookingFormInner() {
     } catch (err: unknown) {
       console.error(err);
       setSubmitStatus('error');
-      setErrorMessage(err.message || 'Verification failed. Please try again.');
+      setErrorMessage(err instanceof Error ? err.message : 'Verification failed. Please try again.');
     }
   };
 

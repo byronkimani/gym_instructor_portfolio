@@ -32,7 +32,7 @@ export async function validateBody<T>(
     }
     
     return { data: result.data };
-  } catch (error) {
+  } catch {
     return { error: errorResponse('Invalid JSON format', 400) };
   }
 }

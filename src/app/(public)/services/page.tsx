@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Dumbbell, Users, ArrowRight, Check } from 'lucide-react';
+import { Dumbbell, Check } from 'lucide-react';
 
 export const metadata = {
   title: 'Services & Pricing | Jiwambe',
@@ -35,7 +35,7 @@ export default function ServicesPage() {
               The ultimate investment in yourself. Completely individualized programming tailored precisely to your goals, biomechanics, and lifestyle constraints. Expect rigorous form correction, custom nutrition advice, and 24/7 accountability.
             </p>
             <div className="mb-8">
-              <h4 className="font-bold text-primary mb-4 text-sm uppercase tracking-wider">What's Included:</h4>
+              <h4 className="font-bold text-primary mb-4 text-sm uppercase tracking-wider">What&apos;s Included:</h4>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {["60-Minute Focused Sessions", "Comprehensive Movement Screen", "Custom Weekly Programming", "Nutritional Macro Guidance", "Direct WhatsApp Support"].map((item, i) => (
                   <li key={i} className="flex items-center gap-2 text-sm text-text-primary font-medium">
@@ -63,10 +63,10 @@ export default function ServicesPage() {
               <span className="bg-primary text-white px-4 py-1.5 rounded-full text-sm font-bold shadow-sm whitespace-nowrap">KES 1,000 / Session</span>
             </div>
             <p className="text-text-muted text-lg leading-relaxed mb-8">
-              High-intensity metabolic conditioning in a highly motivating group setting. You'll use kettlebells, dumbbells, ski ergs, and bodyweight movements to build immense work capacity and torch fat.
+              High-intensity metabolic conditioning in a highly motivating group setting. You&apos;ll use kettlebells, dumbbells, ski ergs, and bodyweight movements to build immense work capacity and torch fat.
             </p>
             <div className="mb-8">
-              <h4 className="font-bold text-primary mb-4 text-sm uppercase tracking-wider">What's Included:</h4>
+              <h4 className="font-bold text-primary mb-4 text-sm uppercase tracking-wider">What&apos;s Included:</h4>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {["60-Minute Fast-Paced Workouts", "Max 10 People Per Class", "Scalable for all levels", "Community Motivation", "Weekend morning slots"].map((item, i) => (
                   <li key={i} className="flex items-center gap-2 text-sm text-text-primary font-medium">

@@ -2,11 +2,21 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Search, User, Mail, ChevronRight, Activity, RefreshCw, AlertCircle } from 'lucide-react';
+import { Search, User, ChevronRight, RefreshCw, AlertCircle } from 'lucide-react';
 import { format } from 'date-fns';
 
+interface Client {
+  email: string;
+  name: string;
+  phone?: string | null;
+  totalBookings: number;
+  confirmedBookings: number;
+  firstBookingDate?: string | null;
+  recentActivity?: boolean;
+}
+
 export default function ClientsPage() {
-  const [clients, setClients] = useState<any[]>([]);
+  const [clients, setClients] = useState<Client[]>([]);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -17,8 +27,8 @@ export default function ClientsPage() {
       const res = await fetch('/api/clients');
       const json = await res.json();
       setClients(json.clients || []);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Failed to fetch clients');
     } finally {
       setLoading(false);
     }
@@ -90,7 +100,7 @@ export default function ClientsPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
-                {filteredClients.map(client => (
+                {filteredClients.map((client: Client) => (
                   <tr key={client.email} className="hover:bg-slate-50/50 transition-colors group cursor-pointer">
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">

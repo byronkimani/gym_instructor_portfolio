@@ -14,7 +14,7 @@ async function check() {
     const count = await prisma.instructor.count();
     console.log("Instructor count:", count);
   } catch (e) {
-    console.error("Failed to connect:", e.message);
+    console.error("Failed to connect:", (e as Error).message);
   } finally {
     await prisma.$disconnect();
   }

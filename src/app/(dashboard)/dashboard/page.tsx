@@ -161,7 +161,7 @@ export default async function OverviewPage() {
             {/* We'd fetch these specifically, but for the dashboard snapshot we can reuse the generic Open Sessions query or just prompt "View Calendar" */}
             <div className="bg-slate-800/50 p-4 rounded-2xl border border-slate-700">
               <p className="text-sm text-gray-300 font-medium leading-relaxed">
-                Your agenda is packed! Review your <Link href="/calendar" className="text-accent hover:underline font-bold">Calendar</Link> to see the complete schedule of 1-on-1s and group classes. Don't forget to confirm {data.pendingCount > 0 ? `the ${data.pendingCount} pending request(s)!` : 'any incoming requests.'}
+                Your agenda is packed! Review your <Link href="/calendar" className="text-accent hover:underline font-bold">Calendar</Link> to see the complete schedule of 1-on-1s and group classes. Don&apos;t forget to confirm {data.pendingCount > 0 ? `the ${data.pendingCount} pending request(s)!` : 'any incoming requests.'}
               </p>
             </div>
           </div>

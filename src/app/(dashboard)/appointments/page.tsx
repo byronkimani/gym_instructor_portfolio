@@ -75,6 +75,20 @@ function ActionModal({
   );
 }
 
+interface Booking {
+  id: string;
+  clientName: string;
+  clientEmail: string;
+  status: string;
+  createdAt: string;
+  session: {
+    id: string;
+    title: string | null;
+    startTime: string;
+    service: { title: string; type: string };
+  };
+}
+
 const TABS = ['ALL', 'PENDING', 'CONFIRMED', 'CANCELLED', 'DECLINED'];
 
 export default function AppointmentsPage() {
@@ -84,14 +98,14 @@ export default function AppointmentsPage() {
   const [activeTab, setActiveTab] = useState(searchParams.get('tab') || 'ALL');
   const [sessionIdFilter, setSessionIdFilter] = useState(searchParams.get('sessionId') || '');
 
-  const [bookings, setBookings] = useState<any[]>([]);
+  const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   // Modal State
   const [modalState, setModalState] = useState<{
     isOpen: boolean;
-    booking: any | null;
+    booking: Booking | null;
     actionType: 'CONFIRM' | 'DECLINE' | 'CANCEL' | null;
   }>({ isOpen: false, booking: null, actionType: null });
   const [actionLoading, setActionLoading] = useState(false);
@@ -100,8 +114,8 @@ export default function AppointmentsPage() {
   const fetchBookings = async () => {
     setLoading(true);
     try {
-      let url = `/api/bookings`;
-      let params = new URLSearchParams();
+      const url = `/api/bookings`;
+      const params = new URLSearchParams();
       if (activeTab !== 'ALL') params.append('status', activeTab);
       if (sessionIdFilter) params.append('sessionId', sessionIdFilter);
 
@@ -110,8 +124,8 @@ export default function AppointmentsPage() {
 
       const json = await res.json();
       setBookings(json.bookings || []);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Failed to fetch bookings');
     } finally {
       setLoading(false);
     }
@@ -148,7 +162,7 @@ export default function AppointmentsPage() {
 
       // Optimistic UI update
       setBookings(prev => prev.map(b => {
-        if (b.id === modalState.booking.id) {
+        if (modalState.booking && b.id === modalState.booking.id) {
           return {
             ...b, status: modalState.actionType === 'CONFIRM' ? 'CONFIRMED' :
               modalState.actionType === 'DECLINE' ? 'DECLINED' : 'CANCELLED'
@@ -158,14 +172,13 @@ export default function AppointmentsPage() {
       }));
 
       setModalState({ isOpen: false, booking: null, actionType: null });
-    } catch (err: any) {
-      alert(`Error updating booking: ${err.message}`);
+    } catch (err: unknown) {
+      alert(`Error updating booking: ${err instanceof Error ? err.message : 'Unknown error'}`);
     } finally {
       setActionLoading(false);
     }
   };
 
-  // Badge rendering helper
   const renderBadge = (status: string) => {
     const config: Record<string, { t: string, c: string }> = {
       PENDING: { t: 'Pending', c: 'bg-yellow-100 text-yellow-800' },
@@ -310,7 +323,7 @@ export default function AppointmentsPage() {
       <ActionModal
         isOpen={modalState.isOpen}
         onClose={() => setModalState({ isOpen: false, booking: null, actionType: null })}
-        actionType={modalState.actionType as any}
+        actionType={modalState.actionType!}
         title={
           modalState.actionType === 'CONFIRM' ? `Confirm booking for ${modalState.booking?.clientName}?` :
             modalState.actionType === 'DECLINE' ? `Decline request from ${modalState.booking?.clientName}?` :

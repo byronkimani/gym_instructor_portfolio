@@ -30,10 +30,10 @@ export default function AboutPage() {
             <h2 className="text-3xl font-extrabold text-primary mb-6 tracking-tight">My Journey</h2>
             <div className="space-y-4 text-text-muted leading-relaxed text-lg">
               <p>
-                Fitness isn't just about moving weights; it's about movement quality, longevity, and mental resilience. My journey started on the athletic field, but transformed into a passion for helping everyday people achieve extraordinary things.
+                Fitness isn&apos;t just about moving weights; it&apos;s about movement quality, longevity, and mental resilience. My journey started on the athletic field, but transformed into a passion for helping everyday people achieve extraordinary things.
               </p>
               <p>
-                I don't believe in fad diets or unsustainable bootcamps. I believe in science-backed programming tailored specifically to your body's mechanics and your life's schedule. Quality reps, consistent effort, and proper recovery.
+                I don&apos;t believe in fad diets or unsustainable bootcamps. I believe in science-backed programming tailored specifically to your body&apos;s mechanics and your life&apos;s schedule. Quality reps, consistent effort, and proper recovery.
               </p>
             </div>
           </div>
@@ -45,7 +45,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             <div>
               <p className="text-text-muted leading-relaxed mb-6">
-                <strong>Assess, Don&apos;t Guess.</strong> Every client begins with a comprehensive movement screening. If we don't know your baseline and compensations, we can't build a safe foundation. I focus heavily on functional hypertrophy, core stability, and cardiovascular endurance to ensure you aren&apos;t just looking fit, but actually feeling invincible.
+                <strong>Assess, Don&apos;t Guess.</strong> Every client begins with a comprehensive movement screening. If we don&apos;t know your baseline and compensations, we can&apos;t build a safe foundation. I focus heavily on functional hypertrophy, core stability, and cardiovascular endurance to ensure you aren&apos;t just looking fit, but actually feeling invincible.
               </p>
             </div>
             <div className="bg-surface p-8 rounded-2xl">
@@ -72,7 +72,7 @@ export default function AboutPage() {
         <section className="text-center">
           <h2 className="text-2xl font-bold text-primary mb-6">Ready to train with purpose?</h2>
           <Link href="/book" className="inline-flex items-center gap-2 bg-accent hover:bg-red-500 text-white font-bold py-4 px-10 rounded-full transition-all text-lg shadow-lg">
-            Let's Get Started <ArrowRight className="h-5 w-5" />
+            Let&apos;s Get Started <ArrowRight className="h-5 w-5" />
           </Link>
         </section>
       </div>

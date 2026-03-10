@@ -42,10 +42,10 @@ export default function ContactPage() {
       setStatus('success');
       reset();
 
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(err);
       setStatus('error');
-      setErrorMessage(err.message || 'Something went wrong. Please try again.');
+      setErrorMessage(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
     }
   };
 
@@ -54,7 +54,7 @@ export default function ContactPage() {
       <div className="max-w-xl mx-auto">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-extrabold text-primary tracking-tight mb-4">Get in Touch</h1>
-          <p className="text-lg text-text-muted">Have a question? Interested in corporate packages? Leave a message and I'll get back to you within 24 hours.</p>
+          <p className="text-lg text-text-muted">Have a question? Interested in corporate packages? Leave a message and I&apos;ll get back to you within 24 hours.</p>
         </div>
 
         <div className="bg-white p-8 md:p-10 rounded-3xl shadow-xl border border-slate-100">

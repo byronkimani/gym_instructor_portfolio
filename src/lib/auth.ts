@@ -24,6 +24,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           });
 
           if (!instructor) {
+            console.error('AUTHORIZE FAIL: Instructor not found with email:', credentials.email);
             return null;
           }
 
@@ -33,6 +34,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           );
 
           if (!isPasswordValid) {
+            console.error('AUTHORIZE FAIL: Invalid password for email:', credentials.email);
             return null;
           }
 

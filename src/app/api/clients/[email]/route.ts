@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { NextRequest } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { successResponse, errorResponse, requireAuth } from '@/lib/api';
@@ -5,13 +7,14 @@ import { BookingStatus } from '@prisma/client';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { email: string } }
+  { params }: { params: Promise<{ email: string }> }
 ) {
   try {
     await requireAuth();
     
     // Decode email from URL param
-    const clientEmail = decodeURIComponent(params.email);
+    const { email } = await params;
+    const clientEmail = decodeURIComponent(email);
 
     // Get all bookings for this email
     const bookings = await prisma.booking.findMany({

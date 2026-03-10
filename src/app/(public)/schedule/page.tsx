@@ -7,13 +7,36 @@ export const metadata = {
   description: 'View upcoming availability and book your next session instantly.',
 };
 
+import { prisma } from '@/lib/prisma';
+import { getSpotsLeft } from '@/lib/utils';
+
 async function getOpenSessions() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/sessions?status=OPEN&limit=50`, {
-    cache: 'no-store'
-  });
-  if (!res.ok) return [];
-  const data = await res.json();
-  return data.sessions || [];
+  try {
+    const sessions = await prisma.session.findMany({
+      where: { status: 'OPEN', startTime: { gte: new Date() } },
+      orderBy: { startTime: 'asc' },
+      take: 50,
+      include: { service: true },
+    });
+
+    return sessions.map(session => ({
+      id: session.id,
+      title: session.title || session.service.title,
+      startTime: session.startTime.toISOString(),
+      duration: session.service.durationMins,
+      location: session.location,
+      capacity: session.capacity,
+      bookedCount: session.bookedCount,
+      spotsLeft: getSpotsLeft(session.capacity, session.bookedCount),
+      service: {
+        type: session.service.type,
+        duration: session.service.durationMins,
+      }
+    }));
+  } catch (error) {
+    console.error("Failed to fetch schedule sessions:", error);
+    return [];
+  }
 }
 
 export default async function SchedulePage() {

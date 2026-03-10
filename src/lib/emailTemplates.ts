@@ -1,4 +1,4 @@
-import { Booking, Session, Instructor } from '@prisma/client';
+import { Booking, Session } from '@prisma/client';
 
 export type BookingWithSession = Booking & { session: Session };
 

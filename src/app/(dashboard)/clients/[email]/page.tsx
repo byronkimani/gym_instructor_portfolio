@@ -1,6 +1,6 @@
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
-import { ArrowLeft, Mail, Phone, Calendar, Clock, MapPin } from 'lucide-react';
+import { ArrowLeft, Mail, Phone, Calendar, Clock } from 'lucide-react';
 import { format } from 'date-fns';
 import { notFound } from 'next/navigation';
 

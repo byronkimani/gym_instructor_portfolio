@@ -14,10 +14,10 @@ export const UpdateBookingStatusSchema = z.object({
 });
 
 export const CreateSessionSchema = z.object({
-  serviceId:   z.string().cuid(),
+  serviceId:   z.string().min(1, 'Service ID is required'),
   title:       z.string().max(100).optional(),
-  startTime:   z.string().datetime(),
-  endTime:     z.string().datetime(),
+  startTime:   z.string().min(1, 'Start time is required'),
+  endTime:     z.string().min(1, 'End time is required'),
   capacity:    z.number().int().min(1).max(100),
   location:    z.string().max(200).optional(),
   notes:       z.string().max(500).optional(),

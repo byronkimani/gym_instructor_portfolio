@@ -85,11 +85,11 @@ export default async function AppointmentDetailPage({ params }: { params: Promis
               </div>
             </div>
 
-            {booking.guestNotes && (
+            {booking.notes && (
               <div>
                 <h2 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">Notes specific to request</h2>
                 <div className="bg-slate-50 border border-slate-100 p-4 rounded-xl text-slate-700 italic">
-                  "{booking.guestNotes}"
+                  &ldquo;{booking.notes}&rdquo;
                 </div>
               </div>
             )}
@@ -118,7 +118,7 @@ export default async function AppointmentDetailPage({ params }: { params: Promis
                     <Activity className="w-4 h-4 text-slate-400 mt-0.5" />
                     <div className="text-sm">
                       <span className="block font-semibold text-slate-700">{booking.session.service?.type?.replace('_', ' ')}</span>
-                      <span className="block text-slate-500">{booking.session.service?.duration} Min</span>
+                      <span className="block text-slate-500">{booking.session.service?.durationMins} Min</span>
                     </div>
                   </div>
                   <div className="flex items-start gap-2 col-span-2">

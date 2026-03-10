@@ -2,11 +2,24 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Settings, Plus, Calendar, Clock, MapPin, Users, Trash2, Edit, RefreshCw, AlertCircle, ChevronDown, ChevronUp } from 'lucide-react';
+import { Settings, Plus, Calendar, Clock, MapPin, Trash2, Edit, RefreshCw, AlertCircle, ChevronDown, ChevronUp } from 'lucide-react';
 import { format } from 'date-fns';
 
+interface Session {
+  id: string;
+  title: string;
+  startTime: string;
+  location: string | null;
+  capacity: number;
+  bookedCount: number;
+  service: {
+    type: string;
+    durationMins: number;
+  };
+}
+
 export default function SessionsPage() {
-  const [sessions, setSessions] = useState<any[]>([]);
+  const [sessions, setSessions] = useState<Session[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showPast, setShowPast] = useState(false);
@@ -14,16 +27,12 @@ export default function SessionsPage() {
   const fetchSessions = async () => {
     setLoading(true);
     try {
-      const res = await fetch('/api/sessions'); // By default GET /api/sessions returns OPEN without date filter if instructor, but actually public is ?status=OPEN. For dashboard, we want ALL.
-      // Wait, standard GET /api/sessions only returns OPEN by default for guests. Let's fetch all.
-      // We will add ?all=true or similar to the API so we can fetch PAST and CANCELLED sessions too,
-      // but standard GET /api/sessions without filters actually returns all if instructor according to our API design.
       const fetchRes = await fetch('/api/sessions');
       if (!fetchRes.ok) throw new Error('Failed to fetch sessions');
       const json = await fetchRes.json();
       setSessions(json.sessions || []);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Failed to fetch sessions');
     } finally {
       setLoading(false);
     }
@@ -37,19 +46,16 @@ export default function SessionsPage() {
     if (!confirm(`Are you sure you want to completely delete "${title}"?\n\nThis will also delete ALL associated bookings! Consider editing it or marking its capacity full instead.`)) return;
 
     try {
-      // Assuming a DELETE /api/sessions/[id] route exists or we'll build it
       const res = await fetch(`/api/sessions/${id}`, { method: 'DELETE' });
       if (!res.ok) throw new Error('Failed to delete session');
-
       setSessions(prev => prev.filter(s => s.id !== id));
-    } catch (err: any) {
-      alert(`Error deleting session: ${err.message}`);
+    } catch (err: unknown) {
+      alert(`Error deleting session: ${err instanceof Error ? err.message : 'Unknown error'}`);
     }
   };
 
   const now = new Date();
 
-  // Sort and filter
   const upcoming = sessions
     .filter(s => new Date(s.startTime) >= now)
     .sort((a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime());
@@ -58,8 +64,7 @@ export default function SessionsPage() {
     .filter(s => new Date(s.startTime) < now)
     .sort((a, b) => new Date(b.startTime).getTime() - new Date(a.startTime).getTime());
 
-  // Render Row Helper
-  const SessionRow = ({ session }: { session: any }) => {
+  const SessionRow = ({ session }: { session: Session }) => {
     const isFull = session.bookedCount >= session.capacity;
     return (
       <tr className="hover:bg-slate-50/50 transition-colors group">
@@ -72,7 +77,7 @@ export default function SessionsPage() {
         </td>
         <td className="px-6 py-4 hidden sm:table-cell text-sm">
           <span className="font-semibold text-slate-700">{session.service?.type?.replace('_', ' ')}</span>
-          <div className="text-xs text-slate-500 mt-0.5">{session.service?.duration} Min</div>
+          <div className="text-xs text-slate-500 mt-0.5">{session.service?.durationMins} Min</div>
         </td>
         <td className="px-6 py-4 hidden md:table-cell text-sm text-slate-600">
           <div className="flex items-center gap-1"><MapPin className="h-3 w-3 text-slate-400" /> {session.location || 'N/A'}</div>
@@ -86,14 +91,14 @@ export default function SessionsPage() {
           </div>
         </td>
         <td className="px-6 py-4 text-right space-x-2">
-          {/* Edit route (Optional/future enhancement) */}
-          <button className="inline-flex items-center justify-center w-8 h-8 rounded-full text-slate-400 hover:text-primary hover:bg-slate-100 transition-colors" title="Edit Session (Not Implemented)">
+          <button className="inline-flex items-center justify-center w-8 h-8 rounded-full text-slate-400 hover:text-primary hover:bg-slate-100 transition-colors" title="Edit Session">
             <Edit className="h-4 w-4" />
           </button>
           <button
             onClick={() => handleDelete(session.id, session.title)}
             className="inline-flex items-center justify-center w-8 h-8 rounded-full text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors"
             title="Delete Session"
+            aria-label={`Delete session ${session.title}`}
           >
             <Trash2 className="h-4 w-4" />
           </button>
@@ -104,8 +109,6 @@ export default function SessionsPage() {
 
   return (
     <div className="space-y-6 max-w-6xl mx-auto">
-
-      {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-200 pb-4">
         <div>
           <h1 className="text-3xl font-extrabold text-primary tracking-tight">Sessions Manager</h1>
@@ -138,14 +141,14 @@ export default function SessionsPage() {
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-sm text-left">
+            <table className="w-full text-sm text-left" aria-label="Sessions table">
               <thead className="bg-slate-50 text-slate-600 font-bold border-b border-slate-100">
                 <tr>
-                  <th className="px-6 py-4">Upcoming Session</th>
-                  <th className="px-6 py-4 hidden sm:table-cell">Type & Duration</th>
-                  <th className="px-6 py-4 hidden md:table-cell">Location</th>
-                  <th className="px-6 py-4 text-center">Capacity</th>
-                  <th className="px-6 py-4 text-right">Actions</th>
+                  <th scope="col" className="px-6 py-4">Upcoming Session</th>
+                  <th scope="col" className="px-6 py-4 hidden sm:table-cell">Type &amp; Duration</th>
+                  <th scope="col" className="px-6 py-4 hidden md:table-cell">Location</th>
+                  <th scope="col" className="px-6 py-4 text-center">Capacity</th>
+                  <th scope="col" className="px-6 py-4 text-right">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
@@ -159,19 +162,18 @@ export default function SessionsPage() {
               </tbody>
             </table>
 
-            {/* Past Sessions Accordion */}
             {past.length > 0 && (
               <div className="border-t border-slate-200">
                 <button
                   onClick={() => setShowPast(!showPast)}
                   className="w-full flex items-center justify-between p-4 bg-slate-50 hover:bg-slate-100 transition-colors text-slate-600 font-bold"
+                  aria-expanded={showPast}
                 >
                   <span>View Past Sessions ({past.length})</span>
                   {showPast ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
                 </button>
-
                 {showPast && (
-                  <table className="w-full text-sm text-left opacity-75">
+                  <table className="w-full text-sm text-left opacity-75" aria-label="Past sessions">
                     <tbody className="divide-y divide-slate-100">
                       {past.map(session => <SessionRow key={session.id} session={session} />)}
                     </tbody>
@@ -179,11 +181,9 @@ export default function SessionsPage() {
                 )}
               </div>
             )}
-
           </div>
         )}
       </div>
-
     </div>
   );
 }
