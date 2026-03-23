@@ -31,7 +31,7 @@ test.describe('Capacity Enforcement', () => {
 
     // Fill the session by updating its bookedCount directly in the DB
     const { execSync } = require('child_process');
-    execSync(`npx prisma db execute --stdin <<EOF
+    execSync(`pnpm exec prisma db execute --stdin <<EOF
 UPDATE "Session" SET "bookedCount" = "capacity" WHERE id = '${session.id}';
 EOF`, { cwd: process.cwd(), stdio: 'ignore' });
 

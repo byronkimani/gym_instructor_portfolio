@@ -20,7 +20,7 @@ export default async function globalSetup(config: FullConfig) {
   try {
     // Prisma v7: --skip-seed not supported but reset doesn't automatically run seed when called directly from execSync in this environment.
     // We run reset --force then explicitly seed.
-    execSync('npx prisma migrate reset --force && npx ts-node --compiler-options \'{"module":"CommonJS"}\' prisma/seed.ts', {
+    execSync('pnpm exec prisma migrate reset --force && pnpm exec ts-node --compiler-options \'{"module":"CommonJS"}\' prisma/seed.ts', {
       cwd: path.resolve(__dirname, '../..'),
       stdio: 'inherit',
       env: { ...process.env },

@@ -2,8 +2,8 @@ import { defineConfig, devices } from '@playwright/test';
 
 /**
  * Playwright E2E Config
- * Run against the dev server: PORT=3001 npm run dev
- * Then: npx playwright test
+ * Run against the dev server: PORT=3001 pnpm dev
+ * Then: pnpm exec playwright test
  */
 export default defineConfig({
   testDir: './tests/e2e',
