@@ -24,7 +24,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           });
 
           if (!instructor) {
-            console.error('AUTHORIZE FAIL: Instructor not found with email:', credentials.email);
+            if (process.env.NODE_ENV === 'development') {
+              console.error('AUTHORIZE FAIL: Instructor not found for supplied email');
+            } else {
+              console.error('AUTHORIZE FAIL: Invalid credentials');
+            }
             return null;
           }
 
@@ -34,7 +38,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           );
 
           if (!isPasswordValid) {
-            console.error('AUTHORIZE FAIL: Invalid password for email:', credentials.email);
+            if (process.env.NODE_ENV === 'development') {
+              console.error('AUTHORIZE FAIL: Invalid password for supplied email');
+            } else {
+              console.error('AUTHORIZE FAIL: Invalid credentials');
+            }
             return null;
           }
 

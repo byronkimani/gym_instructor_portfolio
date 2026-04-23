@@ -6,11 +6,11 @@ import { successResponse, errorResponse, validateBody } from '@/lib/api';
 import { ContactFormSchema } from '@/lib/validations';
 import { sendContactFormEmail } from '@/lib/email';
 import { rateLimit } from '@/lib/rateLimit';
+import { getClientIp } from '@/lib/clientIp';
 
 export async function POST(request: NextRequest) {
   try {
-    // Rate Limiting (re-using the same MVP IP limiter strategy)
-    const ip = request.headers.get('x-forwarded-for') || '127.0.0.1';
+    const ip = getClientIp(request);
     const { allowed, retryAfter } = rateLimit(`contact_${ip}`);
     
     if (!allowed) {

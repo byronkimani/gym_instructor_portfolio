@@ -7,6 +7,7 @@ import { CreateBookingSchema } from '@/lib/validations';
 import { SessionStatus, BookingStatus } from '@prisma/client';
 import { sendBookingRequestClientEmail, sendBookingRequestInstructorEmail } from '@/lib/email';
 import { rateLimit } from '@/lib/rateLimit';
+import { getClientIp } from '@/lib/clientIp';
 
 export async function GET(request: NextRequest) {
   try {
@@ -57,8 +58,7 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    // Rate Limiting
-    const ip = request.headers.get('x-forwarded-for') || '127.0.0.1';
+    const ip = getClientIp(request);
     const { allowed, retryAfter } = rateLimit(ip);
     
     if (!allowed) {

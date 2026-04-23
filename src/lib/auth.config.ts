@@ -1,9 +1,23 @@
 import type { NextAuthConfig } from 'next-auth';
 
+function authSecret(): string {
+  const fromEnv = process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET;
+  if (fromEnv?.trim()) return fromEnv.trim();
+
+  // `next build` runs with NODE_ENV=production but no runtime secrets — do not throw during compile.
+  const isCompilePhase = process.env.NEXT_PHASE === 'phase-production-build';
+  if (process.env.NODE_ENV === 'production' && !isCompilePhase) {
+    throw new Error('AUTH_SECRET or NEXTAUTH_SECRET must be set in production.');
+  }
+
+  // Development / build-time fallback only — set AUTH_SECRET in every deployed environment.
+  return 'dev-only-insecure-secret-change-for-local-work-only-32chars';
+}
+
 export const authConfig = {
-  secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET || "secret123",
+  secret: authSecret(),
   trustHost: true,
-  debug: true,
+  debug: process.env.NODE_ENV === 'development',
   pages: {
     signIn: '/login',
   },

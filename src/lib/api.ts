@@ -23,11 +23,12 @@ export async function validateBody<T>(
     const result = schema.safeParse(body);
     
     if (!result.success) {
-      return { 
-        error: NextResponse.json(
-          { error: 'Invalid payload', details: result.error.format() },
-          { status: 400 }
-        ) 
+      const body =
+        process.env.NODE_ENV === 'development'
+          ? { error: 'Invalid payload', details: result.error.format() }
+          : { error: 'Invalid payload' };
+      return {
+        error: NextResponse.json(body, { status: 400 }),
       };
     }
     
