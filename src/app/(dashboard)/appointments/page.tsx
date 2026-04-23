@@ -133,11 +133,11 @@ export default function AppointmentsPage() {
 
   useEffect(() => {
     fetchBookings();
-    // Update URL quietly to reflect active tab
-    const params = new URLSearchParams(Array.from(searchParams.entries()));
-    if (activeTab === 'ALL') params.delete('tab');
-    else params.set('tab', activeTab);
-    router.replace(`/appointments?${params.toString()}`, { scroll: false });
+    const params = new URLSearchParams();
+    if (activeTab !== 'ALL') params.set('tab', activeTab);
+    if (sessionIdFilter) params.set('sessionId', sessionIdFilter);
+    const qs = params.toString();
+    router.replace(qs ? `/appointments?${qs}` : '/appointments', { scroll: false });
   }, [activeTab, sessionIdFilter]);
 
   // Handle Action Submit

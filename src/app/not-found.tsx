@@ -22,18 +22,24 @@ export default function NotFound() {
           Try going back or check your URL.
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
           <Link
             href="/"
-            className="bg-accent hover:bg-red-500 text-white font-bold py-3 px-8 rounded-full transition-all shadow-lg"
+            className="bg-accent px-8 py-3 font-bold text-white shadow-lg transition-all hover:bg-red-500 rounded-full"
           >
-            Back to Home
+            Back to home
           </Link>
           <Link
             href="/schedule"
-            className="bg-white border-2 border-slate-200 hover:border-accent text-primary font-bold py-3 px-8 rounded-full transition-all"
+            className="rounded-full border-2 border-slate-200 bg-white px-8 py-3 font-bold text-primary transition-all hover:border-accent"
           >
-            View Schedule
+            View schedule
+          </Link>
+          <Link
+            href="/contact#contact-form"
+            className="rounded-full border-2 border-transparent px-8 py-3 font-bold text-primary underline-offset-4 transition-all hover:underline"
+          >
+            Contact
           </Link>
         </div>
       </div>

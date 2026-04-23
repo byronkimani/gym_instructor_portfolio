@@ -34,13 +34,13 @@ export default function Navbar() {
           : 'border-transparent bg-slate-950/70 backdrop-blur-sm',
       )}
     >
-      <div className="mx-auto flex h-[4.5rem] max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 md:h-20">
+      <div className="mx-auto flex h-18 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 md:h-20">
         <Link
           href="/"
           className="flex items-center gap-2.5"
           onClick={() => setIsOpen(false)}
         >
-          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-accent to-red-600 shadow-lg shadow-accent/25">
+          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-linear-to-br from-accent to-red-600 shadow-lg shadow-accent/25">
             <Dumbbell className="h-5 w-5 text-white" aria-hidden />
           </span>
           <span className="flex flex-col leading-tight">
@@ -99,7 +99,7 @@ export default function Navbar() {
       <div
         className={clsx(
           'overflow-hidden border-t border-white/10 bg-slate-950/98 backdrop-blur-lg transition-all duration-300 md:hidden',
-          isOpen ? 'max-h-[28rem] opacity-100' : 'max-h-0 border-transparent opacity-0',
+          isOpen ? 'max-h-112 opacity-100' : 'max-h-0 border-transparent opacity-0',
         )}
       >
         <div className="space-y-1 px-4 py-4">

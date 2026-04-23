@@ -29,7 +29,7 @@ export default function ServicesPage() {
 
       <div className="mx-auto mt-16 max-w-5xl space-y-12 px-4 lg:px-8">
         <div className="card-elevate flex flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white md:flex-row">
-          <div className="relative min-h-[280px] bg-gradient-to-br from-slate-200 to-slate-300 md:w-2/5">
+          <div className="relative min-h-[280px] bg-linear-to-br from-slate-200 to-slate-300 md:w-2/5">
             <div className="absolute inset-0 flex items-center justify-center p-6 text-center text-sm font-semibold uppercase tracking-wide text-slate-500">
               [1-on-1 action still — placeholder]
             </div>
@@ -73,7 +73,7 @@ export default function ServicesPage() {
         </div>
 
         <div className="card-elevate flex flex-col overflow-hidden rounded-3xl border border-accent/25 bg-white shadow-lg md:flex-row-reverse">
-          <div className="relative min-h-[280px] bg-gradient-to-br from-slate-800 to-primary md:w-2/5">
+          <div className="relative min-h-[280px] bg-linear-to-br from-slate-800 to-primary md:w-2/5">
             <div className="absolute inset-0 flex items-center justify-center p-6 text-center text-sm font-semibold uppercase tracking-wide text-slate-300">
               [Group class still — placeholder]
             </div>

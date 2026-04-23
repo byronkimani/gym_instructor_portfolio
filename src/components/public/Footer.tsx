@@ -1,6 +1,33 @@
+import type { ReactNode } from 'react';
 import Link from 'next/link';
 import { Dumbbell, Instagram, Twitter, Facebook } from 'lucide-react';
 import NewsletterDummy from '@/components/public/NewsletterDummy';
+import { getSocialUrl } from '@/lib/site';
+
+function SocialLink({
+  platform,
+  children,
+  label,
+}: {
+  platform: 'instagram' | 'twitter' | 'facebook';
+  children: ReactNode;
+  label: string;
+}) {
+  const url = getSocialUrl(platform);
+  const className = 'text-slate-500 transition-colors hover:text-accent';
+  if (url) {
+    return (
+      <a href={url} target="_blank" rel="noopener noreferrer" className={className} aria-label={label}>
+        {children}
+      </a>
+    );
+  }
+  return (
+    <Link href="/contact#social-handles" className={className} aria-label={`${label} — request link via contact`}>
+      {children}
+    </Link>
+  );
+}
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -24,33 +51,15 @@ export default function Footer() {
               Elite personal training and group fitness — technical coaching, structured progression, zero fluff.
             </p>
             <div className="flex gap-4 pt-1">
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-slate-500 transition-colors hover:text-accent"
-                aria-label="Instagram (placeholder)"
-              >
+              <SocialLink platform="instagram" label="Instagram">
                 <Instagram className="h-5 w-5" />
-              </a>
-              <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-slate-500 transition-colors hover:text-accent"
-                aria-label="Twitter (placeholder)"
-              >
+              </SocialLink>
+              <SocialLink platform="twitter" label="X (Twitter)">
                 <Twitter className="h-5 w-5" />
-              </a>
-              <a
-                href="https://facebook.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-slate-500 transition-colors hover:text-accent"
-                aria-label="Facebook (placeholder)"
-              >
+              </SocialLink>
+              <SocialLink platform="facebook" label="Facebook">
                 <Facebook className="h-5 w-5" />
-              </a>
+              </SocialLink>
             </div>
           </div>
 
@@ -94,13 +103,13 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="text-slate-500 hover:text-slate-300">
-                  Privacy policy (placeholder)
+                <Link href="/privacy" className="text-slate-500 hover:text-slate-300">
+                  Privacy policy
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="text-slate-500 hover:text-slate-300">
-                  Terms (placeholder)
+                <Link href="/terms" className="text-slate-500 hover:text-slate-300">
+                  Terms of service
                 </Link>
               </li>
             </ul>

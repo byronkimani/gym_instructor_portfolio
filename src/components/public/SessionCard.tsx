@@ -56,7 +56,7 @@ export default function SessionCard({ session, readOnly = false }: SessionCardPr
       </h3>
 
       {/* Details */}
-      <div className="space-y-2 mb-5 bg-surface p-4 rounded-xl flex-grow text-sm">
+      <div className="space-y-2 mb-5 bg-surface p-4 rounded-xl grow text-sm">
         <div className="flex items-center text-primary font-semibold gap-3">
           <Calendar className="h-4 w-4 text-accent shrink-0" />
           <span>{formatDate(session.startTime)}</span>
@@ -94,22 +94,23 @@ export default function SessionCard({ session, readOnly = false }: SessionCardPr
       </div>
 
       {/* CTA */}
-      {!readOnly && (
-        <Link
-          href={isFull ? '#' : `/book?sessionId=${session.id}`}
-          id={`book-session-${session.id}`}
-          aria-disabled={isFull}
-          onClick={(e) => isFull && e.preventDefault()}
-          className={cn(
-            'w-full text-center font-bold py-3 rounded-xl transition-all block',
-            isFull
-              ? 'bg-slate-100 text-slate-400 cursor-not-allowed border border-slate-200'
-              : 'bg-primary hover:bg-slate-800 text-white shadow-md hover:shadow-lg'
-          )}
-        >
-          {isFull ? 'Fully Booked' : 'Book Now →'}
-        </Link>
-      )}
+      {!readOnly &&
+        (isFull ? (
+          <span
+            id={`book-session-${session.id}`}
+            className="block w-full cursor-not-allowed rounded-xl border border-slate-200 bg-slate-100 py-3 text-center font-bold text-slate-400"
+          >
+            Fully booked
+          </span>
+        ) : (
+          <Link
+            href={`/book?sessionId=${session.id}`}
+            id={`book-session-${session.id}`}
+            className="block w-full rounded-xl bg-primary py-3 text-center font-bold text-white shadow-md transition-all hover:bg-slate-800 hover:shadow-lg"
+          >
+            Book now →
+          </Link>
+        ))}
     </div>
   );
 }

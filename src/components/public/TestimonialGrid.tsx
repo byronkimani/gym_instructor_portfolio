@@ -14,7 +14,7 @@ export default function TestimonialGrid() {
               <Star key={i} className="h-4 w-4 fill-accent text-accent" aria-hidden />
             ))}
           </div>
-          <p className="flex-grow text-sm leading-relaxed text-text-primary">&ldquo;{t.quote}&rdquo;</p>
+          <p className="grow text-sm leading-relaxed text-text-primary">&ldquo;{t.quote}&rdquo;</p>
           <footer className="mt-6 border-t border-slate-100 pt-4">
             <cite className="not-italic">
               <span className="font-display font-bold text-primary">{t.name}</span>

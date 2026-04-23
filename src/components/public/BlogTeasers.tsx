@@ -12,7 +12,7 @@ export default function BlogTeasers() {
         >
           <p className="text-xs font-bold uppercase tracking-wider text-accent">{post.date}</p>
           <h3 className="font-display mt-2 text-lg font-bold text-primary">{post.title}</h3>
-          <p className="mt-2 flex-grow text-sm leading-relaxed text-text-muted">{post.excerpt}</p>
+          <p className="mt-2 grow text-sm leading-relaxed text-text-muted">{post.excerpt}</p>
           <div className="mt-4 flex items-center justify-between text-xs text-text-muted">
             <span className="flex items-center gap-1">
               <Clock className="h-3.5 w-3.5" aria-hidden />
@@ -21,7 +21,7 @@ export default function BlogTeasers() {
             <span className="font-semibold text-slate-400">Blog soon</span>
           </div>
           <Link
-            href="/contact"
+            href="/contact#contact-form"
             className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary hover:text-accent"
           >
             Notify me <ArrowRight className="h-4 w-4" aria-hidden />

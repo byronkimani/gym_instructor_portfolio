@@ -60,7 +60,7 @@ export default function LoginPage() {
 
       <div className="relative w-full max-w-md overflow-hidden rounded-3xl border border-white/10 bg-white shadow-2xl shadow-black/40">
         <div className="border-b border-slate-100 bg-slate-50 px-8 py-10 text-center">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-accent to-red-600 shadow-lg shadow-accent/30">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-linear-to-br from-accent to-red-600 shadow-lg shadow-accent/30">
             <Dumbbell className="h-7 w-7 text-white" aria-hidden />
           </div>
           <h1 className="font-display mt-5 text-2xl font-extrabold tracking-tight text-primary">Instructor portal</h1>

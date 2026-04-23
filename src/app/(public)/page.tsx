@@ -45,7 +45,7 @@ export default async function HomePage() {
             </p>
             <h1 className="font-display mt-5 text-4xl font-extrabold leading-[1.05] tracking-tight text-white md:text-5xl lg:text-6xl">
               Elite coaching for people who take{' '}
-              <span className="bg-gradient-to-r from-white via-slate-200 to-accent bg-clip-text text-transparent">
+              <span className="bg-linear-to-r from-white via-slate-200 to-accent bg-clip-text text-transparent">
                 execution seriously.
               </span>
             </h1>
@@ -139,7 +139,7 @@ export default async function HomePage() {
             <div className="card-elevate flex flex-col rounded-3xl border border-slate-200 bg-surface p-10 transition-transform hover:-translate-y-1">
               <p className="text-xs font-bold uppercase tracking-wider text-accent">Private</p>
               <h3 className="font-display mt-2 text-2xl font-bold text-primary">1-on-1 personal training</h3>
-              <p className="mt-4 flex-grow text-text-muted">
+              <p className="mt-4 grow text-text-muted">
                 Individualized programming, movement quality, and progression you can trace week to week.
               </p>
               <Link href="/services" className="mt-8 inline-flex items-center gap-2 font-bold text-primary hover:text-accent">
@@ -149,7 +149,7 @@ export default async function HomePage() {
             <div className="card-elevate flex flex-col rounded-3xl border border-accent/30 bg-primary p-10 text-white shadow-xl transition-transform hover:-translate-y-1">
               <p className="text-xs font-bold uppercase tracking-wider text-accent">Group</p>
               <h3 className="font-display mt-2 text-2xl font-bold">HIIT classes</h3>
-              <p className="mt-4 flex-grow text-slate-300">
+              <p className="mt-4 grow text-slate-300">
                 High-output sessions capped for quality coaching — scalable for levels, never sloppy.
               </p>
               <Link href="/services" className="mt-8 inline-flex items-center gap-2 font-bold text-white hover:text-accent">
@@ -210,7 +210,7 @@ export default async function HomePage() {
                       </span>
                     </div>
                     <h3 className="font-display mt-4 text-xl font-bold text-primary">{session.title}</h3>
-                    <div className="mt-4 flex-grow space-y-2 text-sm text-text-muted">
+                    <div className="mt-4 grow space-y-2 text-sm text-text-muted">
                       <div className="flex items-center gap-2">
                         <Clock className="h-4 w-4 shrink-0 text-accent" aria-hidden />
                         {new Date(session.startTime).toLocaleString([], {
@@ -312,7 +312,12 @@ export default async function HomePage() {
               <h2 className="font-display mt-2 text-2xl font-bold text-primary md:text-3xl">From the floor</h2>
               <p className="mt-1 text-sm text-text-muted">Placeholder grid — link to Instagram when live.</p>
             </div>
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-400">@coachbyron (example)</span>
+            <Link
+              href="/contact#social-handles"
+              className="text-xs font-bold uppercase tracking-wider text-slate-400 transition-colors hover:text-accent"
+            >
+              @coachbyron (example) →
+            </Link>
           </div>
           <InstagramDummyGrid />
         </div>
@@ -333,7 +338,7 @@ export default async function HomePage() {
             Book now
           </Link>
           <Link
-            href="/contact"
+            href="/contact#contact-form"
             className="inline-flex min-w-[200px] items-center justify-center rounded-full border-2 border-white/80 px-8 py-4 text-base font-bold text-white transition-colors hover:bg-white/10"
           >
             Contact

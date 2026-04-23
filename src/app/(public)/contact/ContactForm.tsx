@@ -49,7 +49,7 @@ export default function ContactForm() {
   };
 
   return (
-    <div className="card-elevate rounded-3xl border border-slate-200 bg-white p-8 md:p-10">
+    <div id="contact-form" className="card-elevate rounded-3xl border border-slate-200 bg-white p-8 md:p-10">
       {status === 'success' ? (
         <div className="py-12 text-center">
           <CheckCircle2 className="mx-auto mb-6 h-16 w-16 text-emerald-500" />

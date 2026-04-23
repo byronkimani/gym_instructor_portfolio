@@ -64,7 +64,7 @@ export default function ServiceCard({
 
       <p
         className={cn(
-          'leading-relaxed mb-6 flex-grow',
+          'leading-relaxed mb-6 grow',
           isDark ? 'text-gray-300' : 'text-text-muted'
         )}
       >

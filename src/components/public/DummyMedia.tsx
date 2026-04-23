@@ -25,7 +25,7 @@ export default function DummyMedia({
   return (
     <div
       className={clsx(
-        'relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-slate-900 via-primary to-slate-800 shadow-2xl',
+        'relative overflow-hidden rounded-2xl border border-white/10 bg-linear-to-br from-slate-900 via-primary to-slate-800 shadow-2xl',
         aspectClass[aspect],
         className,
       )}

@@ -29,7 +29,7 @@ export default function HeroSection({
   return (
     <section className="relative h-screen min-h-[600px] flex items-center justify-center bg-primary overflow-hidden">
       {/* Animated gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary via-[#16213E] to-[#0F3460] z-0" />
+      <div className="absolute inset-0 bg-linear-to-br from-primary via-[#16213E] to-[#0F3460] z-0" />
 
       {/* Decorative blobs */}
       <div className="absolute top-1/4 -left-24 w-80 h-80 bg-accent/20 rounded-full blur-3xl z-0 animate-pulse" />
@@ -45,7 +45,7 @@ export default function HeroSection({
 
         <h1 className="text-5xl sm:text-7xl font-extrabold text-white tracking-tight mb-6 leading-tight">
           {headline} <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-red-400">
+          <span className="text-transparent bg-clip-text bg-linear-to-r from-accent to-red-400">
             {accentText}
           </span>
         </h1>

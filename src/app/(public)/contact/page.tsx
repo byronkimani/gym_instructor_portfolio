@@ -56,6 +56,15 @@ export default function ContactPage() {
               </li>
             </ul>
             <p className="rounded-2xl border border-slate-200 bg-white p-4 text-sm text-text-muted">{response}</p>
+
+            <div id="social-handles" className="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-5">
+              <h2 className="font-display text-sm font-bold text-primary">Social</h2>
+              <p className="mt-2 text-sm text-text-muted">
+                Public social URLs are optional. Set{' '}
+                <code className="rounded bg-white px-1 text-xs">NEXT_PUBLIC_SOCIAL_*_URL</code> in your environment,
+                or visitors will reach this section from the footer icons.
+              </p>
+            </div>
           </div>
           <div className="lg:col-span-3">
             <ContactForm />

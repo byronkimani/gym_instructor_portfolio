@@ -74,7 +74,7 @@ export default function ScheduleGrid({ initialSessions }: { initialSessions: Ses
 
                                 <h4 className="font-display mb-2 text-xl font-bold text-primary">{session.title}</h4>
 
-                                <div className="space-y-3 mb-6 bg-surface p-4 rounded-xl flex-grow">
+                                <div className="space-y-3 mb-6 bg-surface p-4 rounded-xl grow">
                                     <div className="flex items-center text-primary text-sm gap-3 font-semibold">
                                         <Calendar className="h-5 w-5 text-accent" />
                                         <span>{dateObj.toLocaleDateString([], { weekday: 'long', month: 'short', day: 'numeric' })}</span>
@@ -104,28 +104,33 @@ export default function ScheduleGrid({ initialSessions }: { initialSessions: Ses
                                     </div>
                                 </div>
 
-                                <Link
-                                    href={isFull ? '#' : `/book?sessionId=${session.id}`}
-                                    className={clsx(
-                                        "w-full text-center font-bold py-3 rounded-xl transition-all shadow-sm block",
-                                        isFull
-                                            ? "bg-slate-100 text-slate-400 cursor-not-allowed border border-slate-200"
-                                            : "bg-primary hover:bg-slate-800 text-white shadow-md hover:shadow-lg"
-                                    )}
-                                    aria-disabled={isFull}
-                                    onClick={(e) => isFull && e.preventDefault()}
-                                >
-                                    {isFull ? 'Fully Booked' : 'Book Now'}
-                                </Link>
+                                {isFull ? (
+                                    <span className="block w-full cursor-not-allowed rounded-xl border border-slate-200 bg-slate-100 py-3 text-center text-sm font-bold text-slate-400">
+                                        Fully booked
+                                    </span>
+                                ) : (
+                                    <Link
+                                        href={`/book?sessionId=${session.id}`}
+                                        className="block w-full rounded-xl bg-primary py-3 text-center text-sm font-bold text-white shadow-md transition-all hover:bg-slate-800 hover:shadow-lg"
+                                    >
+                                        Book now
+                                    </Link>
+                                )}
                             </div>
                         );
                     })}
                 </div>
             ) : (
-                <div className="text-center bg-white p-16 rounded-3xl border border-dashed border-slate-300 max-w-2xl mx-auto shadow-sm">
-                    <Info className="h-12 w-12 text-slate-300 mx-auto mb-4" />
-                    <h3 className="text-xl font-bold text-primary mb-2">No Sessions Found</h3>
-                    <p className="text-text-muted">There are currently no open sessions for this filter. Please check back later or contact me directly to schedule something.</p>
+                <div className="mx-auto max-w-2xl rounded-3xl border border-dashed border-slate-300 bg-white p-16 text-center shadow-sm">
+                    <Info className="mx-auto mb-4 h-12 w-12 text-slate-300" />
+                    <h3 className="mb-2 text-xl font-bold text-primary">No sessions found</h3>
+                    <p className="text-text-muted">
+                        There are no open sessions for this filter. Try another filter, check back later, or{' '}
+                        <Link href="/contact#contact-form" className="font-bold text-accent hover:underline">
+                            request a slot
+                        </Link>
+                        .
+                    </p>
                 </div>
             )}
         </div>
