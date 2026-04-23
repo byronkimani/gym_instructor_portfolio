@@ -1,65 +1,84 @@
 import Link from 'next/link';
-import { ArrowRight, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Quote } from 'lucide-react';
+import PublicHeroShell from '@/components/public/PublicHeroShell';
+import PublicPageHeader from '@/components/public/PublicPageHeader';
+import DummyMedia from '@/components/public/DummyMedia';
+import MarketingStatsStrip from '@/components/public/MarketingStatsStrip';
 
 export const metadata = {
-  title: 'About Coach Byron | Jiwambe',
-  description: 'Learn about Coach Byron, a certified personal trainer specializing in functional fitness and transformations.',
+  title: 'About Coach Byron | Coach Byron',
+  description: 'Certified personal trainer — functional fitness, technical rigor, and sustainable progression.',
 };
 
 export default function AboutPage() {
   return (
-    <div className="bg-surface min-h-screen pb-24">
-      {/* Hero */}
-      <div className="bg-primary text-white py-20 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">About Coach Byron</h1>
-          <p className="text-xl text-gray-300">Dedicated to engineering your best self.</p>
+    <div className="min-h-screen pb-24">
+      <PublicHeroShell>
+        <PublicPageHeader
+          eyebrow="Profile"
+          title="About Coach Byron"
+          subtitle="Engineering performance without sacrificing longevity."
+        />
+      </PublicHeroShell>
+
+      <MarketingStatsStrip />
+
+      <div className="mx-auto max-w-4xl px-4 pt-16 lg:px-8">
+        <div className="rounded-3xl border border-slate-200 bg-primary p-8 text-white shadow-xl md:p-12">
+          <Quote className="h-10 w-10 text-accent opacity-80" aria-hidden />
+          <blockquote className="font-display mt-4 text-xl font-semibold leading-snug md:text-2xl">
+            If it cannot be coached with clear intent, it does not belong in your session. Elite is a process, not
+            a hashtag.
+          </blockquote>
+          <p className="mt-4 text-sm font-medium uppercase tracking-wider text-slate-400">Placeholder pull quote</p>
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 mt-16 space-y-20">
-
-        {/* Bio Section */}
-        <section className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <div className="aspect-[4/5] bg-slate-200 rounded-3xl overflow-hidden shadow-lg relative">
-            <div className="absolute inset-0 flex items-center justify-center text-slate-400 font-medium">
-              [Full Body Portrait Placeholder]
-            </div>
-          </div>
+      <div className="mx-auto mt-20 max-w-6xl space-y-20 px-4 lg:px-8">
+        <section className="grid items-center gap-12 md:grid-cols-2">
+          <DummyMedia label="Full-body portrait — replace with photography" aspect="portrait" variant="photo" />
           <div>
-            <h2 className="text-3xl font-extrabold text-primary mb-6 tracking-tight">My Journey</h2>
-            <div className="space-y-4 text-text-muted leading-relaxed text-lg">
+            <h2 className="font-display text-3xl font-extrabold tracking-tight text-primary md:text-4xl">
+              My journey
+            </h2>
+            <div className="mt-6 space-y-4 text-lg leading-relaxed text-text-muted">
               <p>
-                Fitness isn&apos;t just about moving weights; it&apos;s about movement quality, longevity, and mental resilience. My journey started on the athletic field, but transformed into a passion for helping everyday people achieve extraordinary things.
+                Fitness is movement quality, longevity, and mental resilience — not just load. The work started on
+                the field and became a practice of helping everyday people do uncommon things safely.
               </p>
               <p>
-                I don&apos;t believe in fad diets or unsustainable bootcamps. I believe in science-backed programming tailored specifically to your body&apos;s mechanics and your life&apos;s schedule. Quality reps, consistent effort, and proper recovery.
+                Fad templates and random exhaustion are out. Science-backed programming mapped to your mechanics and
+                schedule is in. Quality reps, consistent effort, recovery that earns the next hard block.
               </p>
             </div>
           </div>
         </section>
 
-        {/* Philosophy & Certs */}
-        <section className="bg-white p-10 md:p-16 rounded-3xl shadow-sm border border-slate-100">
-          <h2 className="text-3xl font-extrabold text-primary mb-8 tracking-tight text-center">Training Philosophy</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <section className="rounded-3xl border border-slate-200 bg-white p-10 shadow-sm md:p-16">
+          <h2 className="text-center font-display text-3xl font-extrabold tracking-tight text-primary">
+            Training philosophy
+          </h2>
+          <div className="mt-10 grid gap-12 md:grid-cols-2">
             <div>
-              <p className="text-text-muted leading-relaxed mb-6">
-                <strong>Assess, Don&apos;t Guess.</strong> Every client begins with a comprehensive movement screening. If we don&apos;t know your baseline and compensations, we can&apos;t build a safe foundation. I focus heavily on functional hypertrophy, core stability, and cardiovascular endurance to ensure you aren&apos;t just looking fit, but actually feeling invincible.
+              <p className="leading-relaxed text-text-muted">
+                <strong className="text-primary">Assess, don&apos;t guess.</strong> Every client begins with a
+                comprehensive movement screen. Without baseline and compensation patterns, there is no safe
+                foundation. Functional hypertrophy, core stability, and cardiovascular work should leave you feeling
+                bulletproof — not beaten down.
               </p>
             </div>
-            <div className="bg-surface p-8 rounded-2xl">
-              <h3 className="font-bold text-primary mb-4 text-xl">Certifications</h3>
-              <ul className="space-y-3">
+            <div className="rounded-2xl bg-surface p-8">
+              <h3 className="font-display text-xl font-bold text-primary">Certifications</h3>
+              <ul className="mt-4 space-y-3">
                 {[
-                  "ISSA Certified Personal Trainer",
-                  "Precision Nutrition Level 1 (PN1)",
-                  "CrossFit Level 2 Trainer",
-                  "Kettlebell Athletics Level 1",
-                  "CPR / AED Certified"
-                ].map((cert, i) => (
-                  <li key={i} className="flex items-start gap-3 text-text-primary font-medium">
-                    <CheckCircle2 className="h-5 w-5 text-accent shrink-0 mt-0.5" />
+                  'ISSA Certified Personal Trainer',
+                  'Precision Nutrition Level 1 (PN1)',
+                  'CrossFit Level 2 Trainer',
+                  'Kettlebell Athletics Level 1',
+                  'CPR / AED Certified',
+                ].map((cert) => (
+                  <li key={cert} className="flex items-start gap-3 font-medium text-text-primary">
+                    <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-accent" />
                     {cert}
                   </li>
                 ))}
@@ -68,11 +87,13 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* CTA */}
         <section className="text-center">
-          <h2 className="text-2xl font-bold text-primary mb-6">Ready to train with purpose?</h2>
-          <Link href="/book" className="inline-flex items-center gap-2 bg-accent hover:bg-red-500 text-white font-bold py-4 px-10 rounded-full transition-all text-lg shadow-lg">
-            Let&apos;s Get Started <ArrowRight className="h-5 w-5" />
+          <h2 className="font-display text-2xl font-bold text-primary">Ready to train with purpose?</h2>
+          <Link
+            href="/book"
+            className="mt-6 inline-flex items-center gap-2 rounded-full bg-accent px-10 py-4 text-lg font-bold text-white shadow-lg transition-all hover:bg-red-500"
+          >
+            Start here <ArrowRight className="h-5 w-5" />
           </Link>
         </section>
       </div>

@@ -1,14 +1,15 @@
 import ScheduleGrid from './ScheduleGrid';
+import PublicHeroShell from '@/components/public/PublicHeroShell';
+import PublicPageHeader from '@/components/public/PublicPageHeader';
+import { prisma } from '@/lib/prisma';
+import { getSpotsLeft } from '@/lib/utils';
 
 export const dynamic = 'force-dynamic';
 
 export const metadata = {
-  title: 'Class Schedule | Jiwambe',
-  description: 'View upcoming availability and book your next session instantly.',
+  title: 'Class Schedule | Coach Byron',
+  description: 'Upcoming 1-on-1 and group sessions — reserve before spots fill.',
 };
-
-import { prisma } from '@/lib/prisma';
-import { getSpotsLeft } from '@/lib/utils';
 
 async function getOpenSessions() {
   try {
@@ -19,7 +20,7 @@ async function getOpenSessions() {
       include: { service: true },
     });
 
-    return sessions.map(session => ({
+    return sessions.map((session) => ({
       id: session.id,
       title: session.title || session.service.title,
       startTime: session.startTime.toISOString(),
@@ -31,10 +32,10 @@ async function getOpenSessions() {
       service: {
         type: session.service.type,
         duration: session.service.durationMins,
-      }
+      },
     }));
   } catch (error) {
-    console.error("Failed to fetch schedule sessions:", error);
+    console.error('Failed to fetch schedule sessions:', error);
     return [];
   }
 }
@@ -43,16 +44,16 @@ export default async function SchedulePage() {
   const sessions = await getOpenSessions();
 
   return (
-    <div className="bg-surface min-h-screen pb-24">
-      <div className="bg-primary text-white py-20 px-4 mb-12">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">Availability Schedule</h1>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto">Browse upcoming 1-on-1 slots and group classes. Spots fill up fast!</p>
-        </div>
-      </div>
+    <div className="min-h-screen pb-24">
+      <PublicHeroShell>
+        <PublicPageHeader
+          eyebrow="Calendar"
+          title="Availability"
+          subtitle="Browse open 1-on-1 slots and group classes. High-demand blocks move fast."
+        />
+      </PublicHeroShell>
 
-      <div className="max-w-7xl mx-auto px-4">
-        {/* Pass fetched data to the interactive client component */}
+      <div className="mx-auto max-w-7xl px-4 pt-4 lg:px-8">
         <ScheduleGrid initialSessions={sessions} />
       </div>
     </div>

@@ -28,23 +28,26 @@ export default function ScheduleGrid({ initialSessions }: { initialSessions: Ses
     return (
         <div>
             {/* Filters (Client-side Island) */}
-            <div className="flex justify-center mb-12">
-                <div className="inline-flex bg-white rounded-full p-1.5 shadow-sm border border-slate-200">
+            <div className="mb-12 flex justify-center">
+                <div className="inline-flex rounded-full border border-slate-200 bg-white p-1.5 shadow-sm">
                     <button
+                        type="button"
                         onClick={() => setFilter('ALL')}
-                        className={clsx("px-6 py-2 rounded-full text-sm font-bold transition-all", filter === 'ALL' ? 'bg-primary text-white shadow-md' : 'text-slate-500 hover:text-primary')}
+                        className={clsx("rounded-full px-6 py-2 text-sm font-bold transition-all", filter === 'ALL' ? 'bg-primary text-white shadow-md' : 'text-slate-500 hover:text-primary')}
                     >
                         All Sessions
                     </button>
                     <button
+                        type="button"
                         onClick={() => setFilter('ONE_ON_ONE')}
-                        className={clsx("px-6 py-2 rounded-full text-sm font-bold transition-all", filter === 'ONE_ON_ONE' ? 'bg-primary text-white shadow-md' : 'text-slate-500 hover:text-primary')}
+                        className={clsx("rounded-full px-6 py-2 text-sm font-bold transition-all", filter === 'ONE_ON_ONE' ? 'bg-primary text-white shadow-md' : 'text-slate-500 hover:text-primary')}
                     >
                         1-on-1
                     </button>
                     <button
+                        type="button"
                         onClick={() => setFilter('GROUP')}
-                        className={clsx("px-6 py-2 rounded-full text-sm font-bold transition-all", filter === 'GROUP' ? 'bg-primary text-white shadow-md' : 'text-slate-500 hover:text-primary')}
+                        className={clsx("rounded-full px-6 py-2 text-sm font-bold transition-all", filter === 'GROUP' ? 'bg-primary text-white shadow-md' : 'text-slate-500 hover:text-primary')}
                     >
                         Group Classes
                     </button>
@@ -59,17 +62,17 @@ export default function ScheduleGrid({ initialSessions }: { initialSessions: Ses
                         const dateObj = new Date(session.startTime);
 
                         return (
-                            <div key={session.id} className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col h-full hover:shadow-md transition-shadow">
-                                <div className="flex justify-between items-start mb-4">
-                                    <span className={clsx("text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider", session.service.type === 'ONE_ON_ONE' ? "bg-accent/10 text-accent" : "bg-primary/10 text-primary")}>
+                            <div key={session.id} className="card-elevate flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-6 transition-shadow hover:shadow-md">
+                                <div className="mb-4 flex items-start justify-between gap-2">
+                                    <span className={clsx("rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider", session.service.type === 'ONE_ON_ONE' ? "bg-accent/10 text-accent" : "bg-primary/10 text-primary")}>
                                         {session.service.type.replace('_', ' ')}
                                     </span>
-                                    <span className="text-sm font-semibold text-text-muted bg-slate-100 px-2 py-1 rounded">
-                                        {session.service.duration} Min
+                                    <span className="shrink-0 rounded-md bg-slate-100 px-2 py-1 text-sm font-semibold text-text-muted">
+                                        {session.service.duration} min
                                     </span>
                                 </div>
 
-                                <h4 className="text-xl font-bold text-primary mb-2">{session.title}</h4>
+                                <h4 className="font-display mb-2 text-xl font-bold text-primary">{session.title}</h4>
 
                                 <div className="space-y-3 mb-6 bg-surface p-4 rounded-xl flex-grow">
                                     <div className="flex items-center text-primary text-sm gap-3 font-semibold">

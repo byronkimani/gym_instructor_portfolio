@@ -1,12 +1,13 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Dumbbell } from 'lucide-react';
 
 const loginSchema = z.object({
   email: z.string().email('Invalid email address'),
@@ -53,48 +54,43 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#1A1A2E] p-4">
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden">
-        <div className="p-8">
-          <div className="text-center mb-10">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-[#1A1A2E] text-white rounded-full mb-4">
-              <span className="text-2xl font-bold">GI</span>
-            </div>
-            <h1 className="text-2xl font-bold text-gray-900">Instructor Portal</h1>
-            <p className="text-gray-500 mt-2">Sign in to manage your schedule</p>
-          </div>
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-slate-950 p-4">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_30%_0%,rgba(233,69,96,0.2),transparent_50%)]" />
+      <div className="pointer-events-none absolute -right-20 bottom-0 h-80 w-80 rounded-full bg-indigo-600/20 blur-3xl" />
 
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <div className="relative w-full max-w-md overflow-hidden rounded-3xl border border-white/10 bg-white shadow-2xl shadow-black/40">
+        <div className="border-b border-slate-100 bg-slate-50 px-8 py-10 text-center">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-accent to-red-600 shadow-lg shadow-accent/30">
+            <Dumbbell className="h-7 w-7 text-white" aria-hidden />
+          </div>
+          <h1 className="font-display mt-5 text-2xl font-extrabold tracking-tight text-primary">Instructor portal</h1>
+          <p className="mt-2 text-sm text-text-muted">Authorized access · Train smart stack</p>
+        </div>
+
+        <div className="px-8 py-8">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
             {error && (
-              <div className="bg-red-50 text-red-600 p-4 rounded-lg text-sm font-medium border border-red-100 italic">
+              <div className="rounded-xl border border-red-100 bg-red-50 p-3 text-center text-sm font-medium text-red-600">
                 {error}
               </div>
             )}
 
-            <div className="space-y-2">
-              <label
-                htmlFor="email"
-                className="text-sm font-semibold text-gray-700 block"
-              >
-                Email Address
+            <div className="space-y-1.5">
+              <label htmlFor="email" className="text-sm font-bold text-primary">
+                Email
               </label>
               <input
                 {...register('email')}
                 id="email"
                 type="email"
                 placeholder="instructor@gym.com"
-                className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#1A1A2E] focus:border-transparent outline-none transition-all"
+                className="w-full rounded-xl border border-slate-200 bg-surface px-4 py-3 outline-none transition-all focus:border-transparent focus:ring-2 focus:ring-accent"
               />
-              {errors.email && (
-                <p className="text-xs text-red-500 mt-1">{errors.email.message}</p>
-              )}
+              {errors.email && <p className="text-xs text-red-500">{errors.email.message}</p>}
             </div>
 
-            <div className="space-y-2">
-              <label
-                htmlFor="password"
-                className="text-sm font-semibold text-gray-700 block"
-              >
+            <div className="space-y-1.5">
+              <label htmlFor="password" className="text-sm font-bold text-primary">
                 Password
               </label>
               <input
@@ -102,30 +98,26 @@ export default function LoginPage() {
                 id="password"
                 type="password"
                 placeholder="••••••••"
-                className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#1A1A2E] focus:border-transparent outline-none transition-all"
+                className="w-full rounded-xl border border-slate-200 bg-surface px-4 py-3 outline-none transition-all focus:border-transparent focus:ring-2 focus:ring-accent"
               />
-              {errors.password && (
-                <p className="text-xs text-red-500 mt-1">{errors.password.message}</p>
-              )}
+              {errors.password && <p className="text-xs text-red-500">{errors.password.message}</p>}
             </div>
 
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-[#1A1A2E] text-white py-3 rounded-lg font-bold hover:bg-[#252542] transition-colors flex items-center justify-center gap-2 group disabled:opacity-70"
+              className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-3.5 font-bold text-white transition-colors hover:bg-slate-800 disabled:opacity-70"
             >
-              {isLoading ? (
-                <Loader2 className="w-5 h-5 animate-spin" />
-              ) : (
-                'Sign In'
-              )}
+              {isLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : 'Sign in'}
             </button>
           </form>
         </div>
-        <div className="p-6 bg-gray-50 border-t border-gray-100 text-center">
-          <p className="text-xs text-gray-400">
-            Authorized access only. All actions are logged.
-          </p>
+
+        <div className="border-t border-slate-100 bg-slate-50 px-6 py-4 text-center text-xs text-slate-500">
+          <Link href="/" className="font-semibold text-primary hover:text-accent">
+            ← Back to site
+          </Link>
+          <p className="mt-2">All actions are logged.</p>
         </div>
       </div>
     </div>

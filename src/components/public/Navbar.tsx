@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X, Dumbbell } from 'lucide-react';
@@ -10,87 +10,114 @@ const navLinks = [
   { name: 'About', href: '/about' },
   { name: 'Services', href: '/services' },
   { name: 'Schedule', href: '/schedule' },
-  { name: 'Contact', href: '/contact' }, // Note LLD puts Contact CTA but Contact form is in /book ? Wait, LLD Section 8.1 says Contact link -> Contact page. 
+  { name: 'Contact', href: '/contact' },
 ];
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
 
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-primary shadow-md">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-20">
+    <nav
+      className={clsx(
+        'fixed top-0 left-0 right-0 z-50 border-b transition-colors duration-300',
+        scrolled
+          ? 'border-white/10 bg-slate-950/90 shadow-lg shadow-black/20 backdrop-blur-md'
+          : 'border-transparent bg-slate-950/70 backdrop-blur-sm',
+      )}
+    >
+      <div className="mx-auto flex h-[4.5rem] max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 md:h-20">
+        <Link
+          href="/"
+          className="flex items-center gap-2.5"
+          onClick={() => setIsOpen(false)}
+        >
+          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-accent to-red-600 shadow-lg shadow-accent/25">
+            <Dumbbell className="h-5 w-5 text-white" aria-hidden />
+          </span>
+          <span className="flex flex-col leading-tight">
+            <span className="font-display text-lg font-extrabold tracking-tight text-white sm:text-xl">
+              Coach Byron
+            </span>
+            <span className="hidden text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-400 sm:block">
+              Train smart · Live strong
+            </span>
+          </span>
+        </Link>
 
-          {/* Logo */}
-          <div className="flex items-center">
-            <Link href="/" className="flex items-center gap-2" onClick={() => setIsOpen(false)}>
-              <Dumbbell className="h-8 w-8 text-accent" />
-              <span className="text-white font-bold text-xl tracking-tight hidden sm:block">Coach Byron</span>
-              <span className="text-white font-bold text-xl tracking-tight sm:hidden">Byron</span>
-            </Link>
-          </div>
-
-          {/* Desktop Nav */}
-          <div className="hidden md:flex items-center space-x-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                className={clsx(
-                  "text-sm font-medium transition-colors hover:text-accent",
-                  pathname === link.href ? "text-accent" : "text-gray-300"
-                )}
-              >
-                {link.name}
-              </Link>
-            ))}
+        <div className="hidden items-center gap-1 md:flex">
+          {navLinks.map((link) => (
             <Link
-              href="/book"
-              className="bg-accent hover:bg-red-500 text-white font-semibold py-2 px-6 rounded-md transition-all shadow-sm hover:shadow-md"
+              key={link.name}
+              href={link.href}
+              className={clsx(
+                'rounded-lg px-4 py-2 text-sm font-semibold transition-colors',
+                pathname === link.href
+                  ? 'text-white'
+                  : 'text-slate-300 hover:bg-white/5 hover:text-white',
+              )}
             >
-              Book a Session
+              {link.name}
             </Link>
-          </div>
+          ))}
+          <Link
+            href="/book"
+            className="ml-3 rounded-full bg-accent px-6 py-2.5 text-sm font-bold text-white shadow-md shadow-accent/20 transition-all hover:bg-red-500 hover:shadow-lg hover:shadow-accent/30"
+          >
+            Book
+          </Link>
+        </div>
 
-          {/* Mobile hamburger button */}
-          <div className="flex md:hidden items-center">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="text-gray-300 hover:text-white p-2 rounded-md focus:outline-none"
-              aria-label="Toggle menu"
-            >
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
-          </div>
+        <div className="flex items-center gap-2 md:hidden">
+          <Link
+            href="/book"
+            className="rounded-full bg-accent px-4 py-2 text-xs font-bold text-white"
+            onClick={() => setIsOpen(false)}
+          >
+            Book
+          </Link>
+          <button
+            type="button"
+            onClick={() => setIsOpen(!isOpen)}
+            className="rounded-lg p-2 text-slate-200 hover:bg-white/10 hover:text-white"
+            aria-label="Toggle menu"
+            aria-expanded={isOpen}
+          >
+            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
         </div>
       </div>
 
-      {/* Mobile Nav Menu (Slide down) */}
-      <div className={clsx("md:hidden absolute w-full bg-primary border-t border-slate-800 transition-all duration-300 overflow-hidden", isOpen ? "max-h-96 border-b border-slate-800" : "max-h-0 border-transparent")}>
-        <div className="px-4 pt-2 pb-6 space-y-2 shadow-xl">
+      <div
+        className={clsx(
+          'overflow-hidden border-t border-white/10 bg-slate-950/98 backdrop-blur-lg transition-all duration-300 md:hidden',
+          isOpen ? 'max-h-[28rem] opacity-100' : 'max-h-0 border-transparent opacity-0',
+        )}
+      >
+        <div className="space-y-1 px-4 py-4">
           {navLinks.map((link) => (
             <Link
               key={link.name}
               href={link.href}
               onClick={() => setIsOpen(false)}
               className={clsx(
-                "block px-3 py-3 rounded-md text-base font-medium",
-                pathname === link.href ? "bg-slate-800 text-accent" : "text-gray-300 hover:bg-slate-800 hover:text-white"
+                'block rounded-xl px-4 py-3 text-base font-semibold',
+                pathname === link.href
+                  ? 'bg-white/10 text-accent'
+                  : 'text-slate-200 hover:bg-white/5 hover:text-white',
               )}
             >
               {link.name}
             </Link>
           ))}
-          <div className="pt-4">
-            <Link
-              href="/book"
-              onClick={() => setIsOpen(false)}
-              className="block w-full text-center bg-accent hover:bg-red-500 text-white font-semibold py-3 rounded-md transition-colors"
-            >
-              Book a Session
-            </Link>
-          </div>
         </div>
       </div>
     </nav>

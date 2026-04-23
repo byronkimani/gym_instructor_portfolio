@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { ArrowLeft, CheckCircle2, Calendar, Clock, MapPin } from 'lucide-react';
 import { prisma } from '@/lib/prisma';
+import PublicHeroShell from '@/components/public/PublicHeroShell';
+import PublicPageHeader from '@/components/public/PublicPageHeader';
 
 export const dynamic = 'force-dynamic';
 
@@ -31,7 +33,7 @@ export default async function BookingConfirmPage({
 
   if (!bookingId) {
     return (
-      <div className="bg-surface min-h-screen flex items-center justify-center">
+      <div className="flex min-h-[50vh] items-center justify-center bg-surface px-4">
         <p className="text-text-muted">Invalid booking reference.</p>
       </div>
     );
@@ -44,9 +46,11 @@ export default async function BookingConfirmPage({
       <div className="bg-surface min-h-screen flex flex-col items-center justify-center p-4">
         <h1 className="text-2xl font-bold text-primary mb-4">Booking Not Found</h1>
         <p className="text-text-muted mb-6">We couldn&apos;t locate that booking reference. It may have been removed.</p>
-        <Link href="/schedule" className="text-accent font-semibold hover:underline">Return to Schedule</Link>
+        <Link href="/schedule" className="font-semibold text-accent hover:underline">
+          Return to schedule
+        </Link>
       </div>
-    )
+    );
   }
 
   const sessionDate = new Date(booking.session.startTime);
@@ -57,24 +61,26 @@ export default async function BookingConfirmPage({
   const mpesaRef = process.env.NEXT_PUBLIC_MPESA_ACCOUNT_REF || booking.clientName.split(' ')[0];
 
   return (
-    <div className="bg-surface min-h-screen py-16 px-4">
-      <div className="max-w-2xl mx-auto">
+    <div className="min-h-screen bg-surface">
+      <PublicHeroShell>
+        <PublicPageHeader
+          eyebrow="Confirmed"
+          title="Booking request received"
+          subtitle={`Thanks ${booking.clientName.split(' ')[0]} — confirmation is on its way to ${booking.clientEmail}.`}
+        />
+      </PublicHeroShell>
 
-        {/* Success Header */}
-        <div className="text-center mb-10">
-          <CheckCircle2 className="h-20 w-20 text-green-500 mx-auto mb-6 drop-shadow-sm" />
-          <h1 className="text-3xl md:text-5xl font-extrabold text-primary tracking-tight mb-4">Booking Request Received!</h1>
-          <p className="text-lg text-text-muted">
-            Thanks {booking.clientName.split(' ')[0]}. An email has been sent to <strong>{booking.clientEmail}</strong> confirming receipt.
-          </p>
+      <div className="mx-auto max-w-2xl px-4 py-12">
+        <div className="mb-10 flex justify-center">
+          <CheckCircle2 className="h-16 w-16 text-emerald-500 drop-shadow-sm" aria-hidden />
         </div>
 
-        <div className="bg-white rounded-3xl shadow-xl overflow-hidden mb-8 border border-slate-100">
+        <div className="card-elevate mb-8 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-xl">
           {/* Session Details */}
-          <div className="p-8 border-b border-slate-100 bg-slate-50 relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-2 h-full bg-accent" />
-            <h2 className="text-sm font-bold text-accent uppercase tracking-wide mb-2">Requested Session</h2>
-            <h3 className="text-2xl font-bold text-primary mb-4">{booking.session.title}</h3>
+          <div className="relative overflow-hidden border-b border-slate-100 bg-slate-50 p-8">
+            <div className="absolute left-0 top-0 h-full w-1.5 bg-accent" />
+            <h2 className="mb-2 text-xs font-bold uppercase tracking-wide text-accent">Requested session</h2>
+            <h3 className="font-display mb-4 text-2xl font-bold text-primary">{booking.session.title}</h3>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="flex items-center text-text-primary font-medium gap-3">
@@ -94,7 +100,7 @@ export default async function BookingConfirmPage({
 
           {/* Early M-Pesa Instructions Block */}
           <div className="p-8">
-            <h3 className="text-xl font-bold text-primary mb-4">Payment Instructions</h3>
+            <h3 className="font-display mb-4 text-xl font-bold text-primary">Payment instructions</h3>
             <p className="text-text-muted mb-6">
               Please complete payment utilizing the details below to secure your spot. Your booking remains in <span className="text-yellow-600 font-bold bg-yellow-100 px-2 py-0.5 rounded">Pending</span> status until the instructor manually confirms receipt.
             </p>
@@ -143,11 +149,13 @@ export default async function BookingConfirmPage({
         </div>
 
         <div className="text-center">
-          <Link href="/schedule" className="inline-flex items-center gap-2 text-primary font-bold hover:text-accent transition-colors">
-            <ArrowLeft className="h-5 w-5" /> Back to Schedule
+          <Link
+            href="/schedule"
+            className="inline-flex items-center gap-2 font-bold text-primary transition-colors hover:text-accent"
+          >
+            <ArrowLeft className="h-5 w-5" aria-hidden /> Back to schedule
           </Link>
         </div>
-
       </div>
     </div>
   );
