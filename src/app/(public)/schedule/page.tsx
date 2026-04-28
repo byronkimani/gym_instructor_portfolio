@@ -7,7 +7,7 @@ import { getSpotsLeft } from '@/lib/utils';
 export const dynamic = 'force-dynamic';
 
 export const metadata = {
-  title: 'Class Schedule | Coach Byron',
+  title: 'Class Schedule | Coach Calvo',
   description: 'Upcoming 1-on-1 and group sessions — reserve before spots fill.',
 };
 

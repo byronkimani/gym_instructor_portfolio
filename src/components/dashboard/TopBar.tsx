@@ -39,7 +39,7 @@ export default function TopBar() {
 
         <div className="flex items-center gap-4">
           <div className="hidden sm:flex flex-col items-end">
-            <span className="text-sm font-bold text-primary">Instructor Byron</span>
+            <span className="text-sm font-bold text-primary">Instructor Calvo</span>
             <span className="text-xs text-text-muted">Pro Account</span>
           </div>
           <div className="w-10 h-10 rounded-full bg-slate-200 border-2 border-accent flex items-center justify-center text-slate-400 font-bold overflow-hidden shadow-sm">

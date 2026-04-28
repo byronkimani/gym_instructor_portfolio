@@ -5,7 +5,7 @@ import PublicPageHeader from '@/components/public/PublicPageHeader';
 import BookingClient from './BookingClient';
 
 export const metadata = {
-  title: 'Book a Session | Coach Byron',
+  title: 'Book a Session | Coach Calvo',
   description: 'Reserve a personal training or group session. Payment after instructor confirmation.',
 };
 

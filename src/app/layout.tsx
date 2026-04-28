@@ -1,23 +1,24 @@
 import type { Metadata } from 'next';
-import { Inter, Outfit } from 'next/font/google';
+import { Plus_Jakarta_Sans, Bebas_Neue } from 'next/font/google';
 import './globals.css';
 
-const inter = Inter({
+const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-inter',
+  variable: '--font-jakarta',
 });
 
-const outfit = Outfit({
+const bebasNeue = Bebas_Neue({
   subsets: ['latin'],
+  weight: ['400'],
   display: 'swap',
-  variable: '--font-outfit',
+  variable: '--font-bebas',
 });
 
 export const metadata: Metadata = {
-  title: 'Coach Byron | Train Smart. Live Strong.',
+  title: 'Coach Calvo | Redefine Your Strength',
   description:
-    'Elite personal training and group fitness — book sessions, view availability, and train with technical rigor.',
+    'Inclusive high-performance coaching designed to build resilience, foster confidence, and empower your unique fitness journey.',
 };
 
 export default function RootLayout({
@@ -26,8 +27,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${outfit.variable}`}>
-      <body className={`${inter.className} antialiased`}>{children}</body>
+    <html lang="en" className={`${plusJakartaSans.variable} ${bebasNeue.variable}`}>
+      <body className="antialiased">{children}</body>
     </html>
   );
 }

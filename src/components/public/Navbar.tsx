@@ -28,10 +28,10 @@ export default function Navbar() {
   return (
     <nav
       className={clsx(
-        'fixed top-0 left-0 right-0 z-50 border-b transition-colors duration-300',
+        'fixed top-0 left-0 right-0 z-50 border-b transition-all duration-300',
         scrolled
-          ? 'border-white/10 bg-slate-950/90 shadow-lg shadow-black/20 backdrop-blur-md'
-          : 'border-transparent bg-slate-950/70 backdrop-blur-sm',
+          ? 'border-white/5 bg-primary/80 shadow-2xl shadow-black/40 backdrop-blur-xl'
+          : 'border-transparent bg-primary/40 backdrop-blur-md',
       )}
     >
       <div className="mx-auto flex h-18 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 md:h-20">
@@ -40,15 +40,12 @@ export default function Navbar() {
           className="flex items-center gap-2.5"
           onClick={() => setIsOpen(false)}
         >
-          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-linear-to-br from-accent to-red-600 shadow-lg shadow-accent/25">
+          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-linear-to-br from-accent to-accent-violet shadow-lg shadow-accent/25">
             <Dumbbell className="h-5 w-5 text-white" aria-hidden />
           </span>
           <span className="flex flex-col leading-tight">
-            <span className="font-display text-lg font-extrabold tracking-tight text-white sm:text-xl">
-              Coach Byron
-            </span>
-            <span className="hidden text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-400 sm:block">
-              Train smart · Live strong
+            <span className="font-display text-xl font-bold tracking-widest text-white sm:text-2xl uppercase">
+              Core & Grit
             </span>
           </span>
         </Link>
@@ -59,10 +56,10 @@ export default function Navbar() {
               key={link.name}
               href={link.href}
               className={clsx(
-                'rounded-lg px-4 py-2 text-sm font-semibold transition-colors',
+                'rounded-lg px-4 py-2 text-xs font-bold uppercase tracking-widest transition-colors',
                 pathname === link.href
                   ? 'text-white'
-                  : 'text-slate-300 hover:bg-white/5 hover:text-white',
+                  : 'text-text-muted hover:bg-white/5 hover:text-white',
               )}
             >
               {link.name}
@@ -70,16 +67,16 @@ export default function Navbar() {
           ))}
           <Link
             href="/book"
-            className="ml-3 rounded-full bg-accent px-6 py-2.5 text-sm font-bold text-white shadow-md shadow-accent/20 transition-all hover:bg-red-500 hover:shadow-lg hover:shadow-accent/30"
+            className="ml-3 rounded-lg bg-linear-to-br from-accent to-accent-violet px-6 py-2.5 text-xs font-bold uppercase tracking-widest text-white shadow-md shadow-accent/20 transition-all hover:scale-105 hover:shadow-lg hover:shadow-accent/30"
           >
-            Book
+            Book Now
           </Link>
         </div>
 
         <div className="flex items-center gap-2 md:hidden">
           <Link
             href="/book"
-            className="rounded-full bg-accent px-4 py-2 text-xs font-bold text-white"
+            className="rounded-lg bg-accent px-4 py-2 text-xs font-bold uppercase tracking-widest text-white"
             onClick={() => setIsOpen(false)}
           >
             Book
@@ -98,7 +95,7 @@ export default function Navbar() {
 
       <div
         className={clsx(
-          'overflow-hidden border-t border-white/10 bg-slate-950/98 backdrop-blur-lg transition-all duration-300 md:hidden',
+          'overflow-hidden border-t border-white/5 bg-primary/98 backdrop-blur-xl transition-all duration-300 md:hidden',
           isOpen ? 'max-h-112 opacity-100' : 'max-h-0 border-transparent opacity-0',
         )}
       >
@@ -109,10 +106,10 @@ export default function Navbar() {
               href={link.href}
               onClick={() => setIsOpen(false)}
               className={clsx(
-                'block rounded-xl px-4 py-3 text-base font-semibold',
+                'block rounded-xl px-4 py-3 text-sm font-bold uppercase tracking-widest',
                 pathname === link.href
                   ? 'bg-white/10 text-accent'
-                  : 'text-slate-200 hover:bg-white/5 hover:text-white',
+                  : 'text-text-muted hover:bg-white/5 hover:text-white',
               )}
             >
               {link.name}

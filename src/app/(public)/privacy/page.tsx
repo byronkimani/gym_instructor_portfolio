@@ -3,7 +3,7 @@ import PublicHeroShell from '@/components/public/PublicHeroShell';
 import PublicPageHeader from '@/components/public/PublicPageHeader';
 
 export const metadata = {
-  title: 'Privacy Policy | Coach Byron',
+  title: 'Privacy Policy | Coach Calvo',
   description: 'How we handle your information on this site.',
 };
 

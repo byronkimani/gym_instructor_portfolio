@@ -15,7 +15,7 @@ interface HeroSectionProps {
 export default function HeroSection({
   headline = 'Elite Personal Training &',
   accentText = 'Group Fitness',
-  subHeadline = 'Achieve your fitness goals with Coach Byron. Tailored programs, expert guidance, and a supportive community.',
+  subHeadline = 'Achieve your fitness goals with Coach Calvo. Tailored programs, expert guidance, and a supportive community.',
   primaryCta = { label: 'Book a Session', href: '/book' },
   secondaryCta = { label: 'View Schedule', href: '/schedule' },
 }: HeroSectionProps) {

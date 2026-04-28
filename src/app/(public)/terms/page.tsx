@@ -3,7 +3,7 @@ import PublicHeroShell from '@/components/public/PublicHeroShell';
 import PublicPageHeader from '@/components/public/PublicPageHeader';
 
 export const metadata = {
-  title: 'Terms of Service | Coach Byron',
+  title: 'Terms of Service | Coach Calvo',
   description: 'Terms for using this website and booking sessions.',
 };
 

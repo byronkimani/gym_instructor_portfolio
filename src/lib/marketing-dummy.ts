@@ -17,7 +17,7 @@ export const DUMMY_TRUST_LABELS = [
 export const DUMMY_TESTIMONIALS = [
   {
     quote:
-      'Byron rebuilt my training from the ground up after a knee issue. Numbers are up and I finally trust my movement again.',
+      'Calvo rebuilt my training from the ground up after a knee issue. Numbers are up and I finally trust my movement again.',
     name: 'Alex M.',
     role: 'Competitive runner',
     rating: 5,
@@ -125,5 +125,5 @@ export const DUMMY_CONTACT_SIDEBAR = {
   response: 'Replies within 24 hours on business days.',
   studio: 'Summit Performance Studio\nWestlands, Nairobi (exact pin sent after booking)',
   phone: '+254 700 000 000',
-  email: 'hello@coachbyron.example',
+  email: 'hello@coachcalvo.example',
 } as const;

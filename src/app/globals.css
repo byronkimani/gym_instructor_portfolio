@@ -1,37 +1,59 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-primary: #0f172a;
-  --color-primary-soft: #1e293b;
-  --color-accent: #e94560;
-  --color-surface: #f1f5f9;
-  --color-card: #ffffff;
-  --color-text-primary: #0f172a;
-  --color-text-muted: #64748b;
+  --color-primary: #0A0A0C;
+  --color-primary-soft: #141417;
+  --color-accent: #FF5C00;
+  --color-accent-violet: #8B5CF6;
+  --color-surface: #0A0A0C;
+  --color-card: rgba(255, 255, 255, 0.03);
+  --color-text-primary: #F8F9FA;
+  --color-text-muted: #94A3B8;
   --color-success: #10b981;
   --color-warning: #f59e0b;
   --color-danger: #ef4444;
 
-  --font-sans: "Inter", system-ui, sans-serif;
+  --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-display: "Bebas Neue", cursive;
 }
 
 :root {
-  --background: #f1f5f9;
-  --foreground: #0f172a;
+  --background: #0A0A0C;
+  --foreground: #F8F9FA;
 }
 
 .font-display {
-  font-family: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
-  letter-spacing: -0.02em;
+  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: 0.05em;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
+  font-family: var(--font-sans);
 }
 
 .public-marketing .card-elevate {
-  box-shadow:
-    0 1px 0 rgba(15, 23, 42, 0.04),
-    0 12px 40px -16px rgba(15, 23, 42, 0.18);
+  background: var(--color-card);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.public-marketing .card-elevate:hover {
+  background: rgba(255, 255, 255, 0.06);
+  transform: translateY(-5px);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.btn-gradient {
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-violet));
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.btn-gradient:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(139, 92, 246, 0.2);
 }

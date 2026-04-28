@@ -7,7 +7,7 @@ import FAQAccordion from '@/components/public/FAQAccordion';
 import { DUMMY_FAQ } from '@/lib/marketing-dummy';
 
 export const metadata = {
-  title: 'Services & Pricing | Coach Byron',
+  title: 'Services & Pricing | Coach Calvo',
   description: 'Personal training and group HIIT — inclusions, format, and pricing.',
 };
 

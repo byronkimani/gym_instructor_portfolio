@@ -5,7 +5,7 @@ import ContactForm from './ContactForm';
 import { DUMMY_CONTACT_SIDEBAR } from '@/lib/marketing-dummy';
 
 export const metadata = {
-  title: 'Contact | Coach Byron',
+  title: 'Contact | Coach Calvo',
   description: 'Questions, corporate packages, or training inquiries — send a message.',
 };
 

@@ -6,7 +6,7 @@ import DummyMedia from '@/components/public/DummyMedia';
 import MarketingStatsStrip from '@/components/public/MarketingStatsStrip';
 
 export const metadata = {
-  title: 'About Coach Byron | Coach Byron',
+  title: 'About Coach Calvo | Coach Calvo',
   description: 'Certified personal trainer — functional fitness, technical rigor, and sustainable progression.',
 };
 
@@ -16,7 +16,7 @@ export default function AboutPage() {
       <PublicHeroShell>
         <PublicPageHeader
           eyebrow="Profile"
-          title="About Coach Byron"
+          title="About Coach Calvo"
           subtitle="Engineering performance without sacrificing longevity."
         />
       </PublicHeroShell>
