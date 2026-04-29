@@ -9,7 +9,6 @@ import TrustLogoStrip from '@/components/public/TrustLogoStrip';
 import HowItWorksSteps from '@/components/public/HowItWorksSteps';
 import TestimonialGrid from '@/components/public/TestimonialGrid';
 import FAQAccordion from '@/components/public/FAQAccordion';
-import BlogTeasers from '@/components/public/BlogTeasers';
 import InstagramDummyGrid from '@/components/public/InstagramDummyGrid';
 import PhilosophyPillars from '@/components/public/PhilosophyPillars';
 
@@ -32,7 +31,7 @@ export default async function HomePage() {
   const sessions = await getUpcomingSessions();
 
   return (
-    <div className="flex flex-col public-marketing bg-primary text-white">
+    <div className="flex flex-col public-marketing bg-primary text-foreground">
       {/* Hero */}
       <section className="relative flex min-h-screen items-center overflow-hidden px-4 pt-20 lg:px-8">
         <div 
@@ -44,7 +43,7 @@ export default async function HomePage() {
 
         <div className="relative z-20 mx-auto max-w-7xl w-full">
           <div className="max-w-2xl">
-            <h1 className="font-display text-6xl font-bold leading-[0.9] text-white md:text-8xl lg:text-9xl">
+            <h1 className="font-display text-6xl font-bold leading-[0.9] text-foreground md:text-8xl lg:text-9xl">
               REDEFINE <br />
               <span className="bg-linear-to-r from-accent to-accent-violet bg-clip-text text-transparent">
                 YOUR STRENGTH
@@ -60,21 +59,15 @@ export default async function HomePage() {
               >
                 Start Your Journey
               </Link>
-              <Link
-                href="/schedule"
-                className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/5 px-10 py-4 text-sm font-bold uppercase tracking-widest text-white backdrop-blur-md transition-all hover:bg-white/10"
-              >
-                Our Philosophy
-              </Link>
             </div>
 
             <div className="mt-16 flex gap-12">
               <div className="flex flex-col">
-                <span className="font-display text-4xl text-white">1.2k+</span>
+                <span className="font-display text-4xl text-foreground">1.2k+</span>
                 <span className="text-xs font-bold uppercase tracking-widest text-text-muted">Lives Empowered</span>
               </div>
               <div className="flex flex-col">
-                <span className="font-display text-4xl text-white">100%</span>
+                <span className="font-display text-4xl text-foreground">100%</span>
                 <span className="text-xs font-bold uppercase tracking-widest text-text-muted">Dedicated Support</span>
               </div>
             </div>
@@ -94,7 +87,7 @@ export default async function HomePage() {
           </div>
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.25em] text-accent">The standard</p>
-            <h2 className="font-display mt-4 text-5xl font-bold tracking-widest text-white md:text-6xl uppercase">
+            <h2 className="font-display mt-4 text-5xl font-bold tracking-widest text-foreground md:text-6xl uppercase">
               Precision <br /> over noise.
             </h2>
             <p className="mt-8 text-lg leading-relaxed text-text-muted">
@@ -111,7 +104,7 @@ export default async function HomePage() {
             </ul>
             <Link
               href="/about"
-              className="mt-10 inline-flex items-center gap-3 font-bold uppercase tracking-widest text-accent hover:text-white transition-colors"
+              className="mt-10 inline-flex items-center gap-3 font-bold uppercase tracking-widest text-accent hover:text-foreground transition-colors"
             >
               Full story <ArrowRight className="h-4 w-4" aria-hidden />
             </Link>
@@ -122,7 +115,7 @@ export default async function HomePage() {
       <section className="bg-primary px-4 py-24 lg:px-8 border-y border-white/5">
         <div className="mx-auto max-w-7xl text-center">
           <p className="text-xs font-bold uppercase tracking-[0.25em] text-accent">Operating Principles</p>
-          <h2 className="font-display mt-4 text-5xl font-bold tracking-widest text-white md:text-6xl uppercase">
+          <h2 className="font-display mt-4 text-5xl font-bold tracking-widest text-foreground md:text-6xl uppercase">
             Built for <br /> high performance.
           </h2>
           <div className="mt-16">
@@ -137,13 +130,13 @@ export default async function HomePage() {
           <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
             <div>
               <p className="text-xs font-bold uppercase tracking-[0.25em] text-accent">Live availability</p>
-              <h2 className="font-display mt-4 text-5xl font-bold tracking-widest text-white md:text-6xl uppercase">
+              <h2 className="font-display mt-4 text-5xl font-bold tracking-widest text-foreground md:text-6xl uppercase">
                 Upcoming <br /> Sessions
               </h2>
             </div>
             <Link
               href="/schedule"
-              className="inline-flex items-center justify-center rounded-lg border border-white/10 bg-white/5 px-8 py-4 text-xs font-bold uppercase tracking-widest text-white backdrop-blur-md transition-all hover:bg-white/10"
+              className="inline-flex items-center justify-center rounded-lg border border-white/10 bg-white/5 px-8 py-4 text-xs font-bold uppercase tracking-widest text-foreground backdrop-blur-md transition-all hover:bg-white/10"
             >
               Full schedule
             </Link>
@@ -166,7 +159,7 @@ export default async function HomePage() {
                         {session.service?.durationMins} min
                       </span>
                     </div>
-                    <h3 className="font-display mt-6 text-2xl font-bold text-white uppercase tracking-widest">{session.title}</h3>
+                    <h3 className="font-display mt-6 text-2xl font-bold text-foreground uppercase tracking-widest">{session.title}</h3>
                     <div className="mt-4 grow space-y-3 text-sm text-text-muted">
                       <div className="flex items-center gap-3">
                         <Clock className="h-4 w-4 shrink-0 text-accent" aria-hidden />
@@ -196,7 +189,7 @@ export default async function HomePage() {
                     </div>
                     <Link
                       href={`/book?sessionId=${session.id}`}
-                      className="mt-8 block rounded-lg bg-white/5 py-4 text-center text-xs font-bold uppercase tracking-widest text-white transition-all hover:bg-accent"
+                      className="mt-8 block rounded-lg bg-white/5 py-4 text-center text-xs font-bold uppercase tracking-widest text-foreground transition-all hover:bg-accent"
                     >
                       Reserve
                     </Link>
@@ -207,7 +200,7 @@ export default async function HomePage() {
           ) : (
             <div className="mt-16 rounded-2xl border border-dashed border-white/10 bg-primary-soft p-16 text-center">
               <p className="text-lg text-text-muted uppercase tracking-widest font-bold">No open sessions right now.</p>
-              <Link href="/contact" className="mt-6 inline-block text-sm font-bold uppercase tracking-widest text-accent hover:text-white transition-colors">
+              <Link href="/contact" className="mt-6 inline-block text-sm font-bold uppercase tracking-widest text-accent hover:text-foreground transition-colors">
                 Request a slot →
               </Link>
             </div>
@@ -219,7 +212,7 @@ export default async function HomePage() {
         <div className="mx-auto max-w-7xl">
           <div className="mx-auto max-w-2xl text-center">
             <p className="text-xs font-bold uppercase tracking-[0.25em] text-accent">Proof</p>
-            <h2 className="font-display mt-4 text-5xl font-bold tracking-widest text-white md:text-6xl uppercase">
+            <h2 className="font-display mt-4 text-5xl font-bold tracking-widest text-foreground md:text-6xl uppercase">
               What <br /> Clients Say
             </h2>
           </div>
@@ -233,7 +226,7 @@ export default async function HomePage() {
         <div className="mx-auto max-w-3xl">
           <div className="text-center">
             <p className="text-xs font-bold uppercase tracking-[0.25em] text-accent">FAQ</p>
-            <h2 className="font-display mt-4 text-5xl font-bold tracking-widest text-white md:text-6xl uppercase">
+            <h2 className="font-display mt-4 text-5xl font-bold tracking-widest text-foreground md:text-6xl uppercase">
               Answers
             </h2>
           </div>
@@ -243,28 +236,12 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="bg-primary-soft px-4 py-24 lg:px-8 border-y border-white/5">
-        <div className="mx-auto max-w-7xl">
-          <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end text-center md:text-left">
-            <div>
-              <p className="text-xs font-bold uppercase tracking-[0.25em] text-accent">Field Notes</p>
-              <h2 className="font-display mt-4 text-5xl font-bold tracking-widest text-white md:text-6xl uppercase">
-                Latest <br /> Writing
-              </h2>
-            </div>
-          </div>
-          <div className="mt-16">
-            <BlogTeasers />
-          </div>
-        </div>
-      </section>
-
       <section className="bg-primary px-4 py-24 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <div className="mb-12 flex flex-col justify-between gap-6 sm:flex-row sm:items-end text-center sm:text-left">
             <div>
               <p className="text-xs font-bold uppercase tracking-[0.25em] text-accent">Social</p>
-              <h2 className="font-display mt-4 text-4xl font-bold text-white uppercase tracking-widest md:text-5xl">From the floor</h2>
+              <h2 className="font-display mt-4 text-4xl font-bold text-foreground uppercase tracking-widest md:text-5xl">From the floor</h2>
             </div>
             <Link
               href="/contact#social-handles"
@@ -278,7 +255,7 @@ export default async function HomePage() {
       </section>
 
       <section className="bg-primary px-4 py-24 text-center lg:px-8">
-        <h2 className="font-display text-5xl font-bold tracking-widest text-white md:text-7xl uppercase">
+        <h2 className="font-display text-5xl font-bold tracking-widest text-foreground md:text-7xl uppercase">
           Ready to <br /> train with intent?
         </h2>
         <p className="mx-auto mt-8 max-w-xl text-lg text-text-muted uppercase tracking-[0.2em] font-bold text-xs">
@@ -293,7 +270,7 @@ export default async function HomePage() {
           </Link>
           <Link
             href="/contact#contact-form"
-            className="inline-flex min-w-[240px] items-center justify-center rounded-lg border border-white/10 bg-white/5 px-10 py-5 text-sm font-bold uppercase tracking-widest text-white backdrop-blur-md transition-all hover:bg-white/10"
+            className="inline-flex min-w-[240px] items-center justify-center rounded-lg border border-white/10 bg-white/5 px-10 py-5 text-sm font-bold uppercase tracking-widest text-foreground backdrop-blur-md transition-all hover:bg-white/10"
           >
             Contact
           </Link>

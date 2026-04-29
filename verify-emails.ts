@@ -16,7 +16,7 @@ const mockSession: any = {
   id: 'sess-123',
   title: 'Morning Yoga Mastery',
   startTime: new Date('2026-04-15T08:00:00Z'),
-  location: 'Jiwambe Core Studio',
+  location: 'Core Studio',
 };
 
 const mockBooking: any = {

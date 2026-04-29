@@ -9,12 +9,12 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: '#1A1A2E',
-        accent: '#E94560',
-        surface: '#F8F9FA',
-        card: '#FFFFFF',
-        'text-primary': '#1A1A2E',
-        'text-muted': '#6B7280',
+        primary: 'var(--color-primary)',
+        accent: '#FF5C00',
+        surface: 'var(--color-surface)',
+        card: 'var(--color-card)',
+        'text-primary': 'var(--color-text-primary)',
+        'text-muted': 'var(--color-text-muted)',
         success: '#10B981',
         warning: '#F59E0B',
         danger: '#EF4444',

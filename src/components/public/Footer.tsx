@@ -118,7 +118,7 @@ export default function Footer() {
 
         <div className="mt-20 flex flex-col items-center justify-between gap-6 border-t border-white/5 pt-10 text-[10px] font-bold uppercase tracking-[0.2em] text-white/20 md:flex-row">
           <p>&copy; {currentYear} Core & Grit. All rights reserved.</p>
-          <p>Platform · Jiwambe Gym Instructor</p>
+          <p>Platform · Gym Instructor</p>
         </div>
       </div>
     </footer>

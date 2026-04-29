@@ -26,23 +26,23 @@ export default function TopBar() {
 
   return (
     <>
-      <header className="h-20 bg-white border-b border-slate-200 flex items-center justify-between px-4 sm:px-6 lg:px-8 z-40 sticky top-0 w-full">
+      <header className="h-20 bg-primary/80 backdrop-blur-md border-b border-foreground/5 flex items-center justify-between px-4 sm:px-6 lg:px-8 z-40 sticky top-0 w-full">
         <div className="flex items-center gap-4">
           <button
-            className="md:hidden p-2 text-slate-500 hover:text-primary transition-colors focus:outline-none"
+            className="md:hidden p-2 text-slate-400 hover:text-accent transition-colors focus:outline-none"
             onClick={() => setMobileMenuOpen(true)}
           >
             <Menu className="h-6 w-6" />
           </button>
-          <h1 className="text-2xl font-bold text-primary tracking-tight">{pageTitle}</h1>
+          <h1 className="text-2xl font-bold text-foreground tracking-tight font-display uppercase">{pageTitle}</h1>
         </div>
 
         <div className="flex items-center gap-4">
           <div className="hidden sm:flex flex-col items-end">
-            <span className="text-sm font-bold text-primary">Instructor Calvo</span>
+            <span className="text-sm font-bold text-foreground">Instructor Calvo</span>
             <span className="text-xs text-text-muted">Pro Account</span>
           </div>
-          <div className="w-10 h-10 rounded-full bg-slate-200 border-2 border-accent flex items-center justify-center text-slate-400 font-bold overflow-hidden shadow-sm">
+          <div className="w-10 h-10 rounded-full bg-foreground/5 border border-foreground/10 flex items-center justify-center text-accent font-bold overflow-hidden shadow-lg transition-transform hover:scale-105 cursor-pointer">
             B
           </div>
         </div>
@@ -51,13 +51,15 @@ export default function TopBar() {
       {/* Mobile Slide-over Drawer */}
       <div className={clsx("fixed inset-0 z-50 bg-black/50 transition-opacity md:hidden", mobileMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none")} onClick={() => setMobileMenuOpen(false)} />
 
-      <div className={clsx("fixed inset-y-0 left-0 z-50 w-72 bg-primary transform transition-transform duration-300 ease-in-out md:hidden flex flex-col shadow-2xl border-r border-slate-800", mobileMenuOpen ? "translate-x-0" : "-translate-x-full")}>
-        <div className="h-20 flex items-center justify-between px-6 border-b border-slate-800">
+      <div className={clsx("fixed inset-y-0 left-0 z-50 w-72 bg-primary transform transition-transform duration-300 ease-in-out md:hidden flex flex-col shadow-2xl border-r border-white/5", mobileMenuOpen ? "translate-x-0" : "-translate-x-full")}>
+        <div className="h-20 flex items-center justify-between px-6 border-b border-white/5">
           <Link href="/dashboard" className="flex items-center gap-2" onClick={() => setMobileMenuOpen(false)}>
-            <Dumbbell className="h-8 w-8 text-accent" />
-            <span className="font-extrabold text-xl tracking-tight text-white">Jiwambe Pro</span>
+            <div className="h-10 w-10 bg-accent rounded-xl flex items-center justify-center shadow-lg shadow-accent/20">
+              <Dumbbell className="h-6 w-6 text-white" />
+            </div>
+            <span className="font-display text-2xl tracking-wider text-white uppercase">Instructor <span className="text-accent">portal</span></span>
           </Link>
-          <button onClick={() => setMobileMenuOpen(false)} className="text-gray-400 hover:text-white p-2">
+          <button onClick={() => setMobileMenuOpen(false)} className="text-slate-400 hover:text-white p-2">
             <X className="h-6 w-6" />
           </button>
         </div>
@@ -72,26 +74,29 @@ export default function TopBar() {
                 href={item.href}
                 onClick={() => setMobileMenuOpen(false)}
                 className={clsx(
-                  "flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-medium",
+                  "flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-medium relative",
                   isActive
-                    ? "bg-accent text-white"
-                    : "text-gray-400 hover:text-white focus:bg-slate-800"
+                    ? "bg-linear-to-r from-accent to-red-600 text-white shadow-lg shadow-accent/20"
+                    : "text-slate-400 hover:text-white hover:bg-white/5"
                 )}
               >
                 <Icon className="h-5 w-5" />
-                {item.title}
+                <span>{item.title}</span>
+                {isActive && (
+                  <div className="absolute left-0 w-1 h-6 bg-white rounded-r-full" />
+                )}
               </Link>
             );
           })}
         </nav>
 
-        <div className="p-4 border-t border-slate-800 bg-slate-900/50">
+        <div className="p-4 border-t border-white/5 bg-slate-900/50">
           <button
             onClick={() => signOut({ callbackUrl: '/' })}
-            className="flex items-center gap-3 px-4 py-3 w-full text-left text-gray-400 hover:text-red-400 transition-colors font-medium rounded-xl hover:bg-slate-800"
+            className="flex items-center gap-3 px-4 py-3 w-full text-left text-slate-400 hover:text-red-400 transition-all font-medium rounded-xl hover:bg-red-500/10 group"
           >
-            <LogOut className="h-5 w-5" />
-            Sign Out
+            <LogOut className="h-5 w-5 transition-transform group-hover:-translate-x-1" />
+            <span>Sign Out</span>
           </button>
         </div>
       </div>

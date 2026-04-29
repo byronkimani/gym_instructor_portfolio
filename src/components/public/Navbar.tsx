@@ -6,6 +6,8 @@ import { usePathname } from 'next/navigation';
 import { Menu, X, Dumbbell } from 'lucide-react';
 import clsx from 'clsx';
 
+import ThemeToggle from './ThemeToggle';
+
 const navLinks = [
   { name: 'About', href: '/about' },
   { name: 'Services', href: '/services' },
@@ -44,7 +46,7 @@ export default function Navbar() {
             <Dumbbell className="h-5 w-5 text-white" aria-hidden />
           </span>
           <span className="flex flex-col leading-tight">
-            <span className="font-display text-xl font-bold tracking-widest text-white sm:text-2xl uppercase">
+            <span className="font-display text-xl font-bold tracking-widest text-foreground sm:text-2xl uppercase">
               Core & Grit
             </span>
           </span>
@@ -58,13 +60,17 @@ export default function Navbar() {
               className={clsx(
                 'rounded-lg px-4 py-2 text-xs font-bold uppercase tracking-widest transition-colors',
                 pathname === link.href
-                  ? 'text-white'
-                  : 'text-text-muted hover:bg-white/5 hover:text-white',
+                  ? 'text-foreground'
+                  : 'text-text-muted hover:bg-foreground/5 hover:text-foreground',
               )}
             >
               {link.name}
             </Link>
           ))}
+          
+          <div className="ml-2 mr-2 h-6 w-px bg-foreground/10" />
+          <ThemeToggle />
+
           <Link
             href="/book"
             className="ml-3 rounded-lg bg-linear-to-br from-accent to-accent-violet px-6 py-2.5 text-xs font-bold uppercase tracking-widest text-white shadow-md shadow-accent/20 transition-all hover:scale-105 hover:shadow-lg hover:shadow-accent/30"
@@ -73,7 +79,8 @@ export default function Navbar() {
           </Link>
         </div>
 
-        <div className="flex items-center gap-2 md:hidden">
+        <div className="flex items-center gap-3 md:hidden">
+          <ThemeToggle />
           <Link
             href="/book"
             className="rounded-lg bg-accent px-4 py-2 text-xs font-bold uppercase tracking-widest text-white"
@@ -84,7 +91,7 @@ export default function Navbar() {
           <button
             type="button"
             onClick={() => setIsOpen(!isOpen)}
-            className="rounded-lg p-2 text-slate-200 hover:bg-white/10 hover:text-white"
+            className="rounded-lg p-2 text-foreground/70 hover:bg-foreground/10 hover:text-foreground"
             aria-label="Toggle menu"
             aria-expanded={isOpen}
           >
@@ -108,8 +115,8 @@ export default function Navbar() {
               className={clsx(
                 'block rounded-xl px-4 py-3 text-sm font-bold uppercase tracking-widest',
                 pathname === link.href
-                  ? 'bg-white/10 text-accent'
-                  : 'text-text-muted hover:bg-white/5 hover:text-white',
+                  ? 'bg-foreground/10 text-accent'
+                  : 'text-text-muted hover:bg-foreground/5 hover:text-foreground',
               )}
             >
               {link.name}

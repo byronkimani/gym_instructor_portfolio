@@ -18,7 +18,7 @@ function renderFooter(instructorName?: string) {
   return `
     <div style="margin-top: 32px; padding-top: 16px; border-top: 1px solid #e2e8f0; text-align: center; color: #64748b; font-family: sans-serif; font-size: 14px;">
       <p style="margin: 0;">${instructorName ? `Best regards,<br/><strong>${instructorName}</strong><br/><br/>` : ''}</p>
-      <p style="margin: 0;">Powered by Jiwambe Gym Instructor</p>
+      <p style="margin: 0;">Powered by Gym Instructor</p>
     </div>
   `;
 }

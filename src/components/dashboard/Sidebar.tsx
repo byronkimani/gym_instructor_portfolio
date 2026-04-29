@@ -18,13 +18,15 @@ export default function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <div className="hidden md:flex flex-col w-64 bg-primary text-white h-screen fixed top-0 left-0 border-r border-slate-800 shadow-xl z-50">
+    <div className="hidden md:flex flex-col w-64 bg-primary text-foreground h-screen fixed top-0 left-0 border-r border-foreground/10 shadow-xl z-50">
 
       {/* Brand */}
-      <div className="h-20 flex items-center px-6 border-b border-slate-800">
-        <Link href="/dashboard" className="flex items-center gap-2">
-          <Dumbbell className="h-8 w-8 text-accent" />
-          <span className="font-extrabold text-xl tracking-tight">Jiwambe Pro</span>
+      <div className="h-20 flex items-center px-6 border-b border-white/5">
+        <Link href="/dashboard" className="flex items-center gap-2 group">
+          <div className="h-10 w-10 bg-accent rounded-xl flex items-center justify-center shadow-lg shadow-accent/20 transition-transform group-hover:scale-110">
+            <Dumbbell className="h-6 w-6 text-white" />
+          </div>
+          <span className="font-display text-2xl tracking-wider text-foreground uppercase">Instructor <span className="text-accent">portal</span></span>
         </Link>
       </div>
 
@@ -38,27 +40,30 @@ export default function Sidebar() {
               key={item.href}
               href={item.href}
               className={clsx(
-                "flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-medium",
+                "flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-medium relative group",
                 isActive
-                  ? "bg-accent text-white shadow-md shadow-accent/20"
-                  : "text-gray-400 hover:text-white hover:bg-slate-800"
+                  ? "bg-linear-to-r from-accent to-red-600 text-white shadow-xl shadow-accent/20"
+                  : "text-text-muted hover:text-foreground hover:bg-foreground/5"
               )}
             >
-              <Icon className={clsx("h-5 w-5", isActive ? "text-white" : "text-gray-400")} />
-              {item.title}
+              <Icon className={clsx("h-5 w-5 transition-transform group-hover:scale-110", isActive ? "text-white" : "text-text-muted")} />
+              <span className={clsx(isActive ? "font-bold text-white" : "")}>{item.title}</span>
+              {isActive && (
+                <div className="absolute left-0 w-1 h-6 bg-white rounded-r-full" />
+              )}
             </Link>
           );
         })}
       </nav>
 
       {/* Bottom Actions */}
-      <div className="p-4 border-t border-slate-800">
+      <div className="p-4 border-t border-white/5">
         <button
           onClick={() => signOut({ callbackUrl: '/' })}
-          className="flex items-center gap-3 px-4 py-3 w-full text-left text-gray-400 hover:text-red-400 hover:bg-slate-800 rounded-xl transition-colors font-medium"
+          className="flex items-center gap-3 px-4 py-3 w-full text-left text-text-muted hover:text-red-400 hover:bg-red-500/10 rounded-xl transition-all font-medium group"
         >
-          <LogOut className="h-5 w-5" />
-          Sign Out
+          <LogOut className="h-5 w-5 transition-transform group-hover:-translate-x-1" />
+          <span>Sign Out</span>
         </button>
       </div>
     </div>
